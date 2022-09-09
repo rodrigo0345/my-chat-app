@@ -40,27 +40,20 @@ export function AuthProvider({ children }) {
         return updateEmail(currentUser, email);
     }
 
-    function updateUserInfo(email, username, avatar){
-        const fileRef = ref(storage, `images/${currentUser.uid}.png`);
-        uploadBytes(fileRef, avatar)
-            .then((snapshot) => {
-                getDownloadURL(fileRef).then(
-                    (url) => {
-                        console.log('url saved: ', url);
-                        return updateProfile(currentUser, {
-                            displayName: username,
-                            photoURL: url,
-                            displayName: username,
-                            email: email
-                        })
-                    }
-                ).catch(
-                    (error) => {
-                        console.log(error.message);
-                    }
-                )     
-        });
-        
+    async function updateUserInfo(email, username, avatar){
+        const fileRef = ref(storage, `images/${currentUser.uid}/avatar.webp`);
+
+        const metadata = {
+            contentType: 'image/webp',
+        };
+
+        try{
+            await uploadBytes(fileRef, avatar, metadata);
+            const avatarUrl = await getDownloadURL(fileRef);
+            await updateProfile(currentUser, { displayName: username, photoURL: avatarUrl, email: email });
+        }catch(err){
+            console.warn(err);
+        }
     }
 
     useEffect(() => {

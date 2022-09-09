@@ -28,11 +28,8 @@ export default function UpdateProfile() {
             username = currentUser.username;
         
         imageRef.current?.value?
-            image = imageRef.current.value:
-            image = currentUser.image;
-
-
-        console.log('image', image);
+            image = imageRef.current.files[0]:
+            image = currentUser.photoURL;
 
         try{
             setLoading(true);
