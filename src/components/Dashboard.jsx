@@ -27,7 +27,7 @@ export default function Dashboard() {
             <Card.Body className="d-flex flex-column">
                 <h2 className="text-center mb-4">Profile</h2>
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
-                <img src={currentUser?.photoURL? currentUser.photoURL: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} alt="" style={{margin: "auto", border: "1px solid black", padding: "0.4em"}} height="150"/>
+                <img src={currentUser?.photoURL? currentUser.photoURL: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} alt="" style={{margin: "auto", border: "1px solid black", borderRadius: "50%", padding: "0.4em"}} height="150" width="150"/>
                 <br />
                 <strong>Username: {currentUser && currentUser.displayName}</strong>
                 <br />

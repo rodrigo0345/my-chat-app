@@ -54,7 +54,7 @@ export default function UpdateProfile() {
                         <Form.Label className="mt-3">Photo</Form.Label>
                         <Form.Control ref={imageRef} type="image" height='100'
                         style={{width: '100px', margin: 'auto'}}
-                        src={imageRef.current?.value? imageRef.current.value : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+                        src={currentUser.photoURL? currentUser.photoURL : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
                         />
                         <Form.Control ref={imageRef} type="file"
                         className='mt-3'

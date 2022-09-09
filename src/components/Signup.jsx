@@ -41,16 +41,16 @@ export default function Signup() {
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
                     <Form.Group id="email">
-                        <Form.Label className="mt-3">Email</Form.Label>
-                        <Form.Control ref={emailRef}type="email" required />
+                        <Form.Label>Email</Form.Label>
+                        <Form.Control className="mb-3" ref={emailRef}type="email" required />
                     </Form.Group>
                     <Form.Group id="password">
-                        <Form.Label className="mt-3">Password</Form.Label>
-                        <Form.Control ref={passwordRef} type="password" required />
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control className="mb-3" ref={passwordRef} type="password" required />
                     </Form.Group>
                     <Form.Group id="password-confirm">
-                        <Form.Label className="mt-3">Password Confirmation</Form.Label>
-                        <Form.Control ref={passwordConfirmRef} type="password" required />
+                        <Form.Label>Password Confirmation</Form.Label>
+                        <Form.Control className="mb-3" ref={passwordConfirmRef} type="password" required />
                     </Form.Group>
                     <Button type="submit" className='w-100 mt-3'
                     disabled={loading}>

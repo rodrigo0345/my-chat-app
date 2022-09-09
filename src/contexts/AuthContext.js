@@ -41,14 +41,10 @@ export function AuthProvider({ children }) {
     }
 
     async function updateUserInfo(email, username, avatar){
-        const fileRef = ref(storage, `images/${currentUser.uid}/avatar.webp`);
-
-        const metadata = {
-            contentType: 'image/webp',
-        };
+        const fileRef = ref(storage, `images/${currentUser.uid}/avatar`);
 
         try{
-            await uploadBytes(fileRef, avatar, metadata);
+            await uploadBytes(fileRef, avatar);
             const avatarUrl = await getDownloadURL(fileRef);
             await updateProfile(currentUser, { displayName: username, photoURL: avatarUrl, email: email });
         }catch(err){
