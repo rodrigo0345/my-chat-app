@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import { Card, Button, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { PrivateRoute } from './PrivateRoute'
 
 export default function Dashboard() {
     const { currentUser, logout } = useAuth();
@@ -27,7 +28,7 @@ export default function Dashboard() {
             <Card.Body>
                 <h2 className="text-center mb-4">Profile</h2>
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
-                <strong>Email: {currentUser.email}</strong>
+                <strong>Email: {currentUser && currentUser.email}</strong>
                 <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
                     Update Profile
                 </Link>
