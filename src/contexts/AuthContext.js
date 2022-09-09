@@ -1,6 +1,14 @@
 import React, { useEffect } from 'react'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, updateEmail, updatePassword, getAuth } from 'firebase/auth';
-import { auth } from '../firebase'
+import { 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    sendPasswordResetEmail, 
+    updateEmail, 
+    updatePassword, 
+    updateProfile } from 'firebase/auth';
+import { auth, storage } from '../firebase'
+import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
 const AuthContext = React.createContext();
 
@@ -29,7 +37,30 @@ export function AuthProvider({ children }) {
     }
 
     function updateEmail(email){
-        return updateEmail(auth, email);
+        return updateEmail(currentUser, email);
+    }
+
+    function updateUserInfo(email, username, avatar){
+        const fileRef = ref(storage, `images/${currentUser.uid}.png`);
+        uploadBytes(fileRef, avatar)
+            .then((snapshot) => {
+                getDownloadURL(fileRef).then(
+                    (url) => {
+                        console.log('url saved: ', url);
+                        return updateProfile(currentUser, {
+                            displayName: username,
+                            photoURL: url,
+                            displayName: username,
+                            email: email
+                        })
+                    }
+                ).catch(
+                    (error) => {
+                        console.log(error.message);
+                    }
+                )     
+        });
+        
     }
 
     useEffect(() => {
@@ -49,6 +80,7 @@ export function AuthProvider({ children }) {
         logout,
         resetPassword,
         updateEmail,
+        updateUserInfo
     }
     return (
         <AuthContext.Provider value={value}>

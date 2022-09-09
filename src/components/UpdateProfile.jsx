@@ -1,35 +1,48 @@
 import React, {useRef, useState} from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
-import { Link, useNavigate } from 'react-router-dom';
+import { createRoutesFromChildren, Link, useNavigate } from 'react-router-dom';
+import { updateProfile } from 'firebase/auth';
 
 export default function UpdateProfile() {
     const emailRef = useRef();
     const usernameRef = useRef();
+    const imageRef = useRef();
     const { currentUser, updateEmail } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const { updateUserInfo } = useAuth();
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
-        const promises = [];
-        if(emailRef.current.value !== currentUser.email) {
-            promises.push(updateEmail(emailRef.current.value));
-        }
+        let email, username, image;
 
-        setLoading(true);
-        setError('');
+        emailRef.current.value !== currentUser.email?
+            email = emailRef.current.value:
+            email = currentUser.email;
+        
+        usernameRef.current?.value?
+            username = usernameRef.current.value:
+            username = currentUser.username;
+        
+        imageRef.current?.value?
+            image = imageRef.current.value:
+            image = currentUser.image;
 
-        Promise.all(promises).then(() => {
+
+        console.log('image', image);
+
+        try{
+            setLoading(true);
+            setError('');
+            await updateUserInfo(email, username, image);
             navigate('/');
-        }).catch((error) => {
+        } catch(error) {
             setError("Failed to update account");
             console.warn(error);
-        }).finally(() => {
-            setLoading(false);
-        });
+        }
 
         setLoading(false);
     }
@@ -43,9 +56,12 @@ export default function UpdateProfile() {
                 <Form onSubmit={handleSubmit}>
                     <Form.Group id="photo">
                         <Form.Label className="mt-3">Photo</Form.Label>
-                        <Form.Control ref={usernameRef} type="image" height='100'
+                        <Form.Control ref={imageRef} type="image" height='100'
                         style={{width: '100px', margin: 'auto'}}
-                        src={currentUser.photoURL? currentUser.photoURL : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+                        src={imageRef.current?.value? imageRef.current.value : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+                        />
+                        <Form.Control ref={imageRef} type="file"
+                        className='mt-3'
                         />
                     </Form.Group>
                     <Form.Group id="username">

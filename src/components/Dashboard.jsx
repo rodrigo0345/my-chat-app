@@ -28,6 +28,9 @@ export default function Dashboard() {
             <Card.Body>
                 <h2 className="text-center mb-4">Profile</h2>
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
+                <img src={currentUser?.photoURL? currentUser.photoURL: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} alt="" />
+                <strong>Username: {currentUser && currentUser.displayName}</strong>
+                <br />
                 <strong>Email: {currentUser && currentUser.email}</strong>
                 <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
                     Update Profile
