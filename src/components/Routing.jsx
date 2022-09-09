@@ -7,6 +7,7 @@ import PrivateRoute from "./PrivateRoute";
 import { BrowserRouter as Router, Routes , Route, Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import ForgotPassword from "./ForgotPassword";
+import UpdateProfile from "./UpdateProfile";
 
 function Routing() {
 
@@ -21,6 +22,12 @@ function Routing() {
                     {
                       <PrivateRoute>
                         <Dashboard />
+                      </PrivateRoute>
+                    } />
+                    <Route path="/update-profile" element=
+                    {
+                      <PrivateRoute>
+                        <UpdateProfile />
                       </PrivateRoute>
                     } />
                     <Route path="/signup" element={<Signup />} />
