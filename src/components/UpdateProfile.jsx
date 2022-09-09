@@ -5,9 +5,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 export default function UpdateProfile() {
     const emailRef = useRef();
-    const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
-    const { currentUser, updateEmail, updatePassword } = useAuth();
+    const usernameRef = useRef();
+    const { currentUser, updateEmail } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -15,16 +14,9 @@ export default function UpdateProfile() {
     function handleSubmit(e) {
         e.preventDefault();
 
-        if(passwordConfirmRef.current.value !== passwordRef.current.value) {
-            return setError("Passwords do not match");
-        }
-
         const promises = [];
         if(emailRef.current.value !== currentUser.email) {
             promises.push(updateEmail(emailRef.current.value));
-        }
-        if(passwordRef.current.value) {
-            promises.push(updatePassword(passwordRef.current.value));
         }
 
         setLoading(true);
@@ -49,21 +41,23 @@ export default function UpdateProfile() {
                 <h2 className="text-center mb-4">Update Profile</h2>
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
                 <Form onSubmit={handleSubmit}>
+                    <Form.Group id="photo">
+                        <Form.Label className="mt-3">Photo</Form.Label>
+                        <Form.Control ref={usernameRef} type="image" height='100'
+                        style={{width: '100px', margin: 'auto'}}
+                        src={currentUser.photoURL? currentUser.photoURL : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+                        />
+                    </Form.Group>
+                    <Form.Group id="username">
+                        <Form.Label className="mt-3">Username</Form.Label>
+                        <Form.Control ref={usernameRef} type="text" maxLength={20} 
+                        defaultValue={currentUser.displayName? currentUser.displayName: ''} 
+                        placeholder='Enter a new username'
+                        />
+                    </Form.Group>
                     <Form.Group id="email">
                         <Form.Label className="mt-3">Email</Form.Label>
                         <Form.Control defaultValue={currentUser.email} ref={emailRef}type="email" required />
-                    </Form.Group>
-                    <Form.Group id="password">
-                        <Form.Label className="mt-3"
-                        >Password</Form.Label>
-                        <Form.Control placeholder='Leave blank to keep the same'
-                        ref={passwordRef} type="password"/>
-                    </Form.Group>
-                    <Form.Group id="password-confirm">
-                        <Form.Label className="mt-3">Password Confirmation</Form.Label>
-                        <Form.Control
-                        placeholder='Leave blank to keep the same' 
-                        ref={passwordConfirmRef} type="password"/>
                     </Form.Group>
                     <Button type="submit" className='w-100 mt-3'
                     disabled={loading}>
