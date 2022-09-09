@@ -6,6 +6,7 @@ import Login from "./Login";
 import PrivateRoute from "./PrivateRoute";
 import { BrowserRouter as Router, Routes , Route, Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import ForgotPassword from "./ForgotPassword";
 
 function Routing() {
 
@@ -24,6 +25,7 @@ function Routing() {
                     } />
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
                   </Routes>
               </AuthProvider>
             </Router>
