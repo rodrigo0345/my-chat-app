@@ -9,7 +9,7 @@ import {
 import { auth, storage } from '../firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db } from '../firebase';
-import { collection, addDoc } from 'firebase/firestore';
+import { setDoc, doc} from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -21,9 +21,8 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = React.useState();
     const [loading, setLoading] = React.useState(true);
 
-    function registerUserDataInDatabase(photo, name, email){
-        const colUsers = collection(db, "users");
-        return addDoc(colUsers, {
+    function registerUserDataInDatabase(photo, name, email, userID){
+        return setDoc(doc(db, "users", userID),{
             displayName: name,
             email: email,
             photoURL: photo,
