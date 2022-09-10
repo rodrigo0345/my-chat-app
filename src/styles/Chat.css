@@ -1,0 +1,30 @@
+.diplay-messages{
+    border: 1px solid black;
+    min-height: 80vh;
+    border-radius: 5vmin;
+    padding: 5vmin;
+    box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.335);
+    display: flex;
+    flex-direction: column;
+}
+
+.other-person-msg{
+    background-color: #e6e6e6;
+    border-radius: 5vmin;
+    padding: 2vmin;
+    margin: 2vmin 0;
+    width: fit-content;
+    box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.335);
+    align-self: flex-start;
+}
+
+.my-msg{
+    background-color: rgb(99, 99, 254);
+    color: white;
+    border-radius: 5vmin;
+    padding: 2vmin;
+    margin: 2vmin 0;
+    width: fit-content;
+    box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.335);
+    align-self: flex-end;
+}
