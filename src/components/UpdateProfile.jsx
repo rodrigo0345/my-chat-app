@@ -7,7 +7,7 @@ export default function UpdateProfile() {
     const emailRef = useRef();
     const usernameRef = useRef();
     const imageRef = useRef();
-    const { currentUser, updateEmail } = useAuth();
+    const { currentUser, registerUserDataInDatabase } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -34,6 +34,7 @@ export default function UpdateProfile() {
             setLoading(true);
             setError('');
             await updateUserInfo(email, username, image);
+            await registerUserDataInDatabase(JSON.stringify(image), username, email, currentUser.uid);
             navigate('/');
         } catch(error) {
             setError("Failed to update account");

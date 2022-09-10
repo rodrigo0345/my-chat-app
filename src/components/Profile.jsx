@@ -32,6 +32,9 @@ export default function Profile() {
                 <strong>Username: {currentUser && currentUser.displayName}</strong>
                 <br />
                 <strong>Email: {currentUser && currentUser.email}</strong>
+                <Link to="/" className="btn btn-secondary w-100 mt-3">
+                    Home
+                </Link>
                 <Link to="/update-profile" className="btn btn-primary w-100 mt-3">
                     Update Profile
                 </Link>

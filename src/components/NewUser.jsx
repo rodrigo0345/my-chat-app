@@ -4,7 +4,6 @@ import { useAuth } from '../contexts/AuthContext'
 import { Link, useNavigate } from 'react-router-dom';
 
 export default function UpdateProfile() {
-    const emailRef = useRef();
     const usernameRef = useRef();
     const imageRef = useRef();
     const { currentUser, registerUserDataInDatabase } = useAuth();
@@ -30,10 +29,10 @@ export default function UpdateProfile() {
             setLoading(true);
             setError('');
             await updateUserInfo(currentUser.email, username, image);
-            await registerUserDataInDatabase(image, username, currentUser.email, currentUser.uid);
+            await registerUserDataInDatabase(JSON.stringify(image), username, currentUser.email, currentUser.uid);
             navigate('/');
         } catch(error) {
-            setError("Failed to update account");
+            setError("Failed to create account");
             console.warn(error);
         }
 

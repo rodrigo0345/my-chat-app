@@ -62,7 +62,7 @@ export function AuthProvider({ children }) {
     }
 
     function searchUser(id){
-
+        return db.collection("users").doc(id).get();
     }
 
     useEffect(() => {
@@ -83,7 +83,8 @@ export function AuthProvider({ children }) {
         logout,
         resetPassword,
         updateEmail,
-        updateUserInfo
+        updateUserInfo,
+        searchUser
     }
     return (
         <AuthContext.Provider value={value}>
