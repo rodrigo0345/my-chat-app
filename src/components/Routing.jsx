@@ -10,6 +10,7 @@ import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import Chat from "./Chat";
 import MsgProvider from "../contexts/MsgContext";
+import NewUser from "./NewUser";
 
 function Routing() {
 
@@ -38,6 +39,12 @@ function Routing() {
                     {
                       <PrivateRoute>
                         <UpdateProfile />
+                      </PrivateRoute>
+                    } />
+                    <Route exact path="/new-user" element=
+                    {
+                      <PrivateRoute newUser={true}>
+                        <NewUser />
                       </PrivateRoute>
                     } />
                     <Route path="/signup" element={<Signup />} />

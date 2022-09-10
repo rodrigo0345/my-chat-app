@@ -4,11 +4,12 @@ import {
     signInWithEmailAndPassword, 
     signOut, 
     sendPasswordResetEmail, 
-    updateEmail, 
-    updatePassword, 
-    updateProfile } from 'firebase/auth';
+    updateProfile,
+ } from 'firebase/auth';
 import { auth, storage } from '../firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { db } from '../firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -19,6 +20,15 @@ export function useAuth(){
 export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = React.useState();
     const [loading, setLoading] = React.useState(true);
+
+    function registerUserDataInDatabase(photo, name, email){
+        const colUsers = collection(db, "users");
+        return addDoc(colUsers, {
+            displayName: name,
+            email: email,
+            photoURL: photo,
+        })
+    }
 
     function signup(email, password){
         return createUserWithEmailAndPassword(auth, email, password);
@@ -52,6 +62,10 @@ export function AuthProvider({ children }) {
         }
     }
 
+    function searchUser(id){
+
+    }
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user);
@@ -64,6 +78,7 @@ export function AuthProvider({ children }) {
 
     const value = {
         currentUser,
+        registerUserDataInDatabase,
         signup,
         login,
         logout,
