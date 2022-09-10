@@ -9,6 +9,7 @@ import { useAuth } from "../contexts/AuthContext";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import Chat from "./Chat";
+import MsgProvider from "../contexts/MsgContext";
 
 function Routing() {
 
@@ -19,12 +20,14 @@ function Routing() {
             <Router>
               <AuthProvider>
                   <Routes>
-                  <Route exact path={"/" || "/chat"} element=
-                    {
-                      <PrivateRoute>
-                        <Chat />
-                      </PrivateRoute>
-                    } />
+                    <MsgProvider>
+                      <Route exact path={"/" || "/chat"} element=
+                        {
+                          <PrivateRoute>
+                            <Chat />
+                          </PrivateRoute>
+                        } />
+                    </MsgProvider>
                     <Route exact path="/profile" element=
                     {
                       <PrivateRoute>
