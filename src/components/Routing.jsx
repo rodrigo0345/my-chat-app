@@ -1,13 +1,14 @@
 import { Container } from "react-bootstrap";
 import { AuthProvider } from "../contexts/AuthContext";
 import Signup from "./Signup";
-import Dashboard from "./Dashboard";
+import Profile from "./Profile";
 import Login from "./Login";
 import PrivateRoute from "./PrivateRoute";
 import { BrowserRouter as Router, Routes , Route, Navigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
+import Chat from "./Chat";
 
 function Routing() {
 
@@ -18,10 +19,16 @@ function Routing() {
             <Router>
               <AuthProvider>
                   <Routes>
-                    <Route exact path="/" element=
+                  <Route exact path={"/" || "/chat"} element=
                     {
                       <PrivateRoute>
-                        <Dashboard />
+                        <Chat />
+                      </PrivateRoute>
+                    } />
+                    <Route exact path="/profile" element=
+                    {
+                      <PrivateRoute>
+                        <Profile />
                       </PrivateRoute>
                     } />
                     <Route path="/update-profile" element=

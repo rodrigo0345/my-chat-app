@@ -43,6 +43,10 @@ export default function UpdateProfile() {
         setLoading(false);
     }
 
+    function handleChange(e){
+        // filter better this shit
+    }
+
     return (
     <>
         <Card>
