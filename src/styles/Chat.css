@@ -189,20 +189,27 @@
         height: 30px;
     }
     .send-message input[type="text"]{
-        width: 50vw;
+        width: 70vw;
     }
     .send-message button[type="submit"]{
-        border-radius: 50%;
         height: 30px;
-        width: 30px;
+        width: 20%;
     }
     .send-message{
         position: absolute;
         bottom: 0;
         right: 50%;
         transform: translateX(50%);
-        width: 100%;
         z-index: 1;
+        padding: 0 2vmin;
+        width: 100%;
+        padding: 7vmin 0;
+    }
+    .send-message form{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
     .user{
         position: absolute;
@@ -212,6 +219,7 @@
         width: 100%;
         z-index: 1;
         padding: 1em;
+        max-height: 70px;
     }
     .diplay-messages{
         height: 80vh;

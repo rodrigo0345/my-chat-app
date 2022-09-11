@@ -46,8 +46,6 @@ export default function Chat() {
         }
 
         const data = await fetchUserData(senderID);
-
-        console.warn(data.photo)
         let element;
 
         // just changed the order of the photo
@@ -107,9 +105,9 @@ export default function Chat() {
         ) }
       </div>
       <div className="send-message">
-        <Form className='d-flex align-items-center' onSubmit={send}>
+        <Form className='d-flex align-items-center justify-content-around' onSubmit={send}>
           <Form.Group name="message">
-            <Form.Control disabled={loading} type="text" ref={messageWritten} required maxLength={'100'} />
+            <Form.Control disabled={loading} type="text" ref={messageWritten} required maxLength={'60'} />
           </Form.Group>
           <button type="submit" className='w-40'>
             Send
