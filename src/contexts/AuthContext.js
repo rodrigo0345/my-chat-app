@@ -21,11 +21,15 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = React.useState();
     const [loading, setLoading] = React.useState(true);
 
-    function registerUserDataInDatabase(photo, name, email, userID){
+    async function registerUserDataInDatabase(name, email, userID){
+
+        const fileRef = ref(storage, `images/${userID}/avatar`);
+        const avatarUrl = await getDownloadURL(fileRef);
+
         return setDoc(doc(db, "users", userID),{
             displayName: name,
             email: email,
-            photoURL: photo,
+            photoURL: avatarUrl,
         })
     }
 
@@ -65,7 +69,6 @@ export function AuthProvider({ children }) {
         const colUserRef = collection(db, "users");
         const userRef = doc(colUserRef, id);
         return getDoc(userRef);
-        //return getDoc(userRef);
     }
 
     useEffect(() => {

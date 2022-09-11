@@ -33,7 +33,7 @@ export default function UpdateProfile() {
             setLoading(true);
             setError('');
             await updateUserInfo(currentUser.email, username, image);
-            await registerUserDataInDatabase(JSON.stringify(image), username, currentUser.email, currentUser.uid);
+            await registerUserDataInDatabase(username, currentUser.email, currentUser.uid);
             navigate('/');
         } catch(error) {
             setError("Failed to create account");

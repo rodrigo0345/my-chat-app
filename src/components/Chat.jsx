@@ -49,6 +49,8 @@ export default function Chat() {
 
         console.warn(data.photo)
         let element;
+
+        // just changed the order of the photo
         if(sender === 'my'){
           element = (
             <div className={`${sender}-wrapper`} key={index}> 
@@ -81,7 +83,7 @@ export default function Chat() {
 
   async function fetchUserData(id){
     const user = await searchUser(id);
-    return user?.data()? {name: user.data().displayName, photo: JSON.parse(user.data().photoURL).toString()}: {name: 'Deleted user', photo: undefined};
+    return user?.data()? {name: user.data().displayName, photo: user.data().photoURL}: {name: 'Deleted user', photo: undefined};
   }
 
   useEffect(() => {
