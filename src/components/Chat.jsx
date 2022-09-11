@@ -55,7 +55,7 @@ export default function Chat() {
         const data = await fetchUserData(senderID);
         let element;
 
-        // just changed the order of the photo
+        // just changed the order of the photo (use justify-content: reverse)
         if(sender === 'my'){
           element = (
             <div className={`${sender}-wrapper`} key={index}> 
