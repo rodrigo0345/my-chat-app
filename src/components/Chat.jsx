@@ -46,12 +46,32 @@ export default function Chat() {
         }
 
         const data = await fetchUserData(senderID);
-        const element = (
-          <div className={`${sender}-msg`} key={index}>
-            <p className="msg-author">{data.name}</p>
-            <p className="msg">{msg.message}</p>
-          </div>
-        );
+
+        console.warn(data.photo)
+        let element;
+        if(sender === 'my'){
+          element = (
+            <div className={`${sender}-wrapper`} key={index}> 
+              <div className={`${sender}-msg`}>
+                <p className="msg-author">{data.name}</p>
+                <p className="msg">{msg.message}</p>
+              </div>
+              {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
+            </div>
+          );
+        }
+        else{
+          element = (
+            <div className={`${sender}-wrapper`} key={index}>
+              {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
+              <div className={`${sender}-msg`}>
+                <p className="msg-author">{data.name}</p>
+                <p className="msg">{msg.message}</p>
+              </div>
+            </div>
+          );
+        }
+        
 
         return element;
     }));
@@ -61,7 +81,7 @@ export default function Chat() {
 
   async function fetchUserData(id){
     const user = await searchUser(id);
-    return user?.data()? {name: user.data().displayName, photo: user.data().photoURL}: {name: 'Deleted user', photo: ''};
+    return user?.data()? {name: user.data().displayName, photo: JSON.parse(user.data().photoURL).toString()}: {name: 'Deleted user', photo: undefined};
   }
 
   useEffect(() => {
@@ -71,10 +91,9 @@ export default function Chat() {
   return (
     <div className="chat">
       <div className="user">
-        <p>Logged in as: </p>
         <Link to="/profile" >
-          <span>{currentUser.displayName}</span>
           <img id="avatar" src={currentUser.photoURL} alt="" />
+          <p>{currentUser.displayName}</p>
         </Link>
       </div>
       <div className="diplay-messages">

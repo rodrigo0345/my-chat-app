@@ -19,6 +19,12 @@
     border: 1px solid black;
 }
 
+.user a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .user img{
     width: 3em;
     height: 3em;
@@ -29,6 +35,7 @@
 }
 
 .user p{
+    font-size: 1.3em;
     margin: 0;
     text-decoration: none transparent;
     color: black;
@@ -76,12 +83,11 @@
     opacity: 0.6;
 }
 
-
 .diplay-messages{
     position: relative;
     border: 1px solid black;
     height: 80vh;
-    padding: 5vmin;
+    padding: 5vmin 3vmin;
     box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.335);
     display: flex;
     flex-direction: column;
@@ -89,10 +95,43 @@
     scrollbar-width: none; 
     width: 100%;
     font-size: 1em;
+    overflow-x: hidden;
 }
 
 .diplay-messages::-webkit-scrollbar {
     display: none;
+}
+
+.my-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.my-wrapper img{
+    width: 3.7em;
+    height: 3.7em;
+    border-radius: 50%;
+    margin: 1vmin;
+    background-color: black;
+    border: 1px solid black;
+}
+
+.other-person-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.other-person-wrapper img{
+    width: 3.7em;
+    height: 3.7em;
+    border-radius: 50%;
+    margin: 1vmin;
+    background-color: gray;
+    border: 1px solid black;
 }
 
 .other-person-msg{
@@ -143,7 +182,41 @@
     .chat{
         width: 100%;
     }
-    .diplay-messages{
+    .diplay-messages, .send-message{
         font-size: 0.7em;
+    }
+    .send-message button[type="submit"], .send-message input[type="text"]{
+        height: 30px;
+    }
+    .send-message input[type="text"]{
+        width: 50vw;
+    }
+    .send-message button[type="submit"]{
+        border-radius: 50%;
+        height: 30px;
+        width: 30px;
+    }
+    .send-message{
+        position: absolute;
+        bottom: 0;
+        right: 50%;
+        transform: translateX(50%);
+        width: 100%;
+        z-index: 1;
+    }
+    .user{
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        z-index: 1;
+        padding: 1em;
+    }
+    .diplay-messages{
+        height: 80vh;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        box-shadow: none;
     }
 }
