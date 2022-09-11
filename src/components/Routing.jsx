@@ -16,8 +16,9 @@ function Routing() {
 
   return (
     
-      <Container className="d-flex align-items-center justify-content-center" style={{minHeight: "100vh", width: "100%"}}>
-          <div>
+      <div>
+          <div style={{width: "100vw", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
+          height: "100vh"}}>
             <Router>
               <AuthProvider>
                   <Routes>
@@ -54,7 +55,7 @@ function Routing() {
               </AuthProvider>
             </Router>
           </div>
-      </Container>
+      </ div>
     
   );
 }

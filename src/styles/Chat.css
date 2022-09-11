@@ -1,12 +1,14 @@
 .chat{
     color: #FFFFFF;
     border: 1px solid #FFFFFF;
-    min-width: 700px;
-    overflow: auto;
+    width: 60%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 0;
+    align-self: center;
+    justify-self: center;
 }
 
 .user{
@@ -48,7 +50,7 @@
     height: 40px;
     padding: 1em;
     outline: none;
-    font-size: 1.1em;
+    font-size: 1em;
     padding: 0 1vmin;
     margin: 0;
     
@@ -86,6 +88,7 @@
     overflow-y: auto;
     scrollbar-width: none; 
     width: 100%;
+    font-size: 1em;
 }
 
 .diplay-messages::-webkit-scrollbar {
@@ -134,4 +137,13 @@
     color: black;
     
     margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .chat{
+        width: 100%;
+    }
+    .diplay-messages{
+        font-size: 0.7em;
+    }
 }
