@@ -7,8 +7,7 @@ import { useAuth } from '../contexts/AuthContext'
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
-  const {getMessages, sendMessage} = useMsg();
-  const [messages, setMessages] = React.useState("");
+  const {messages, sendMessage} = useMsg();
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const messageWritten = useRef(); 
@@ -38,9 +37,7 @@ export default function Chat() {
 
     try{
       setError('');
-      const msgs = await getMessages();
-      setMessages(msgs);
-      console.log(msgs);
+
     } catch(error) {
       console.warn(error);
       setError(error.message);
@@ -73,7 +70,7 @@ export default function Chat() {
           } catch(error){
             console.warn(error);
             setError(error.message);
-            return;
+            return null;
           }
         }
         return (
@@ -86,19 +83,15 @@ export default function Chat() {
       })
   }
 
-  React.useEffect(() => {
-    get();
-  }, [])
+  console.log('messages', messages);
 
   return (
-    <>
+    <div>
       <Link to="/profile" className="user">
         <p>{currentUser.displayName}</p>
         <img id="avatar" src={currentUser.photoURL} alt="" />
       </Link>
       <div className="diplay-messages">
-
-        
         <div className="other-person-msg">
           <p className="msg-author">rodrigo123</p>
           <p className="msg">Boas malta, tudo fixe?</p>
@@ -118,8 +111,8 @@ export default function Chat() {
             Send
           </Button>
         </Form>
-        </div>
+      </div>
       
-    </>
+    </div>
   )
 }

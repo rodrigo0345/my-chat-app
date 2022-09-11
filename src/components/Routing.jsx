@@ -21,7 +21,7 @@ function Routing() {
             <Router>
               <AuthProvider>
                   <Routes>
-                    <Route exact path={"/" || "/chat"} element=
+                    <Route exact path="/" element=
                       {
                         <PrivateRoute>
                           <MsgProvider>

@@ -1,6 +1,8 @@
 import React from 'react'
 import { setDoc, collection, doc, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase';
+import uniqid from 'uniqid';
+import { Timestamp } from 'firebase/firestore';
 
 const MsgContext = React.createContext();
 
@@ -13,32 +15,33 @@ export default function MsgProvider({ children }) {
     const [ loading, setLoading ] = React.useState(true);
     const [ messages, setMessages ] = React.useState([]);
 
+    // used for later
+    const [ currentChat, setCurrentChat ] = React.useState(null);
+
     const colRef = collection(db, "chat");
 
-    function getMessages(){
-        return messages;
-    }
-
-    function sendMessage(userID, chatID, message){
-        return setDoc(doc(colRef, chatID), {
+    function sendMessage(userID, chatID="geral", message){
+        const colRefChat = collection(db, chatID);
+        return setDoc(doc(colRefChat, uniqid()), {
             userID: userID,
-            chatID: chatID,
             message: message,
-        })
+            timestamp: Timestamp.now()
+        });
     }
 
     const value = {
-        getMessages,
+        messages,
         sendMessage,
     };
 
     React.useEffect(() => {
-        const colChat = collection(db, "chat");
-        const unsubscribe = onSnapshot(doc(db, "chat", "geral"),
+        const colChat = collection(db, "geral");
+        const unsubscribe = onSnapshot(colChat,
             (querySnapshot) => {
                 const docs = [];
-                querySnapshot.forEach((doc) => {
-                    docs.push({ ...doc.data(), id: doc.id });
+                console.log('snapshot', querySnapshot.docs)
+                querySnapshot.docs.forEach((doc) => {
+                    docs.push({ ...doc.data() });
                 });
                 setMessages(docs);
                 setLoading(false);
