@@ -17,11 +17,11 @@ function Routing() {
   return (
     
       <Container className="d-flex align-items-center justify-content-center" style={{minHeight: "100vh"}}>
-          <div className="w-100" style={{maxWidth: "450px"}}>
+          <div>
             <Router>
               <AuthProvider>
                   <Routes>
-                    <Route exact path="/" element=
+                    <Route exact path={"/" || "/chat"} element=
                       {
                         <PrivateRoute>
                           <MsgProvider>

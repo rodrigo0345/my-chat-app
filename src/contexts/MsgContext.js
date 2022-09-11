@@ -2,7 +2,7 @@ import React from 'react'
 import { setDoc, collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from '../firebase';
 import uniqid from 'uniqid';
-import { Timestamp, orderBy } from 'firebase/firestore';
+import { Timestamp, orderBy, limit } from 'firebase/firestore';
 
 const MsgContext = React.createContext();
 
@@ -36,7 +36,7 @@ export default function MsgProvider({ children }) {
 
     React.useEffect(() => {
         const colChat = collection(db, "geral");
-        const q = query(colChat, orderBy("timestamp", "asc"));
+        const q = query(colChat, orderBy("timestamp", "desc"), limit(10));
 
         const unsubscribe = onSnapshot(q,
             (querySnapshot) => {

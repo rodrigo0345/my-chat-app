@@ -27,6 +27,7 @@ export default function Chat() {
       setLoading(true);
       setError('');
       await sendMessage(senderID, chatID, msg);
+      e.target.reset();
     }
     catch(error){
       setError("Failed to send message");
@@ -55,12 +56,11 @@ export default function Chat() {
         return element;
     }));
 
-    setDisplayMessages(msgs);
+    setDisplayMessages(msgs.reverse());
   }
 
   async function fetchUserData(id){
     const user = await searchUser(id);
-    console.log(user.data());
     return user?.data()? {name: user.data().displayName, photo: user.data().photoURL}: {name: 'Deleted user', photo: ''};
   }
 
@@ -69,11 +69,14 @@ export default function Chat() {
   }, [messages]);
 
   return (
-    <div>
-      <Link to="/profile" className="user">
-        <p>{currentUser.displayName}</p>
-        <img id="avatar" src={currentUser.photoURL} alt="" />
-      </Link>
+    <div className="chat">
+      <div className="user">
+        <p>Logged in as: </p>
+        <Link to="/profile" >
+          <span>{currentUser.displayName}</span>
+          <img id="avatar" src={currentUser.photoURL} alt="" />
+        </Link>
+      </div>
       <div className="diplay-messages">
         { displayMessages && displayMessages.map(
           (msg) => {
@@ -85,11 +88,11 @@ export default function Chat() {
       <div className="send-message">
         <Form className='d-flex align-items-center' onSubmit={send}>
           <Form.Group name="message">
-            <Form.Control disabled={loading} type="text" ref={messageWritten} required />
+            <Form.Control disabled={loading} type="text" ref={messageWritten} required maxLength={'100'} />
           </Form.Group>
-          <Button type="submit" className='w-40'>
+          <button type="submit" className='w-40'>
             Send
-          </Button>
+          </button>
         </Form>
       </div>
       

@@ -1,12 +1,23 @@
+.chat{
+    color: #FFFFFF;
+    border: 1px solid #FFFFFF;
+    min-width: 700px;
+    overflow: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .user{
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: aliceblue;
-    border-radius: 5vmin;
+    border: 1px solid black;
 }
 
-.user > img{
+.user img{
     width: 3em;
     height: 3em;
     border-radius: 50%;
@@ -15,7 +26,7 @@
     border: 1px solid black;
 }
 
-.user > p{
+.user p{
     margin: 0;
     text-decoration: none transparent;
     color: black;
@@ -23,31 +34,58 @@
 
 
 .send-message{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     height: 50px;
     background-color: #fff;
-    border-top: 1px solid black;
+    border: 1px solid black;
     padding: 3vmin;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.send-message input[type="text"]{
+    width: 100%;
+    height: 40px;
+    padding: 1em;
+    outline: none;
+    font-size: 1.1em;
+    padding: 0 1vmin;
+    margin: 0;
+    
+}
+
+.send-message button[type="submit"]{
+    width: 7rem;
+    height: 40px;
+    outline: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    background-color: rgb(99, 99, 254);
+    color: white;
+    margin-left: 10px;
+}
+
+.send-message button[type="submit"]:hover{
+    opacity: 0.8;
+}
+
+.send-message button[type="submit"]:active{
+    opacity: 0.6;
+}
+
+
 .diplay-messages{
     position: relative;
     border: 1px solid black;
     height: 80vh;
-    border-radius: 5vmin;
     padding: 5vmin;
     box-shadow: 1px 3px 10px rgba(0, 0, 0, 0.335);
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    padding-bottom: 5vmin;
     scrollbar-width: none; 
+    width: 100%;
 }
 
 .diplay-messages::-webkit-scrollbar {
@@ -58,7 +96,6 @@
     border-radius: 5vmin;
     margin: 2vmin 0;
     width: fit-content;
-
     align-self: flex-start;
 }
 
