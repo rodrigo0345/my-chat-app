@@ -2,7 +2,6 @@
     color: #FFFFFF;
     border: 1px solid #FFFFFF;
     width: 60%;
-    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -181,6 +180,11 @@
 @media (max-width: 768px) {
     .chat{
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: auto 0;
+        align-self: center;
     }
     .diplay-messages, .send-message{
         font-size: 0.7em;

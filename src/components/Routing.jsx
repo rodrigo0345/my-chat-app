@@ -17,8 +17,8 @@ function Routing() {
   return (
     
       <div>
-          <div style={{width: "100vw", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
-          height: "100vh"}}>
+          <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
+          height: `${window.innerHeight}px`}}>
             <Router>
               <AuthProvider>
                   <Routes>

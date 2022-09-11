@@ -5,6 +5,13 @@ import { Form, Button } from 'react-bootstrap'
 import "../styles/Chat.css"
 import { useAuth } from '../contexts/AuthContext'
 import { useEffect } from 'react'
+import styled from 'styled-components'
+
+const ChatComponent = styled.div`
+  @media screen and (max-width: 768px) {
+    height: ${window.innerHeight}px;
+  }
+`
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
@@ -27,7 +34,7 @@ export default function Chat() {
       setLoading(true);
       setError('');
       await sendMessage(senderID, chatID, msg);
-      e.target.reset();
+      e.target.message.value = "";
     }
     catch(error){
       setError("Failed to send message");
@@ -89,7 +96,7 @@ export default function Chat() {
   }, [messages]);
 
   return (
-    <div className="chat">
+    <ChatComponent className="chat">
       <div className="user">
         <Link to="/profile" >
           <img id="avatar" src={currentUser.photoURL} alt="" />
@@ -107,7 +114,7 @@ export default function Chat() {
       <div className="send-message">
         <Form className='d-flex align-items-center justify-content-around' onSubmit={send}>
           <Form.Group name="message">
-            <Form.Control disabled={loading} type="text" ref={messageWritten} required maxLength={'60'} />
+            <Form.Control disabled={loading} name="message" type="text" ref={messageWritten} required maxLength={'80'} />
           </Form.Group>
           <button type="submit" className='w-40'>
             Send
@@ -115,6 +122,6 @@ export default function Chat() {
         </Form>
       </div>
       
-    </div>
+    </ChatComponent>
   )
 }
