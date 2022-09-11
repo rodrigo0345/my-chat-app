@@ -1,5 +1,5 @@
 import React from 'react'
-import { addDoc, collection, doc, onSnapshot } from "firebase/firestore";
+import { setDoc, collection, doc, onSnapshot } from "firebase/firestore";
 import { db } from '../firebase';
 
 const MsgContext = React.createContext();
@@ -20,7 +20,7 @@ export default function MsgProvider({ children }) {
     }
 
     function sendMessage(userID, chatID, message){
-        return addDoc(colRef, {
+        return setDoc(doc(colRef, chatID), {
             userID: userID,
             chatID: chatID,
             message: message,
@@ -33,14 +33,17 @@ export default function MsgProvider({ children }) {
     };
 
     React.useEffect(() => {
-        const unsubscribe = onSnapshot(colRef, (querySnapshot) => {
-            const docs = [];
-            querySnapshot.forEach((doc) => {
-                docs.push({ ...doc.data(), id: doc.id });
-            });
-            setMessages(docs);
-            setLoading(false);
-        });
+        const colChat = collection(db, "chat");
+        const unsubscribe = onSnapshot(doc(db, "chat", "geral"),
+            (querySnapshot) => {
+                const docs = [];
+                querySnapshot.forEach((doc) => {
+                    docs.push({ ...doc.data(), id: doc.id });
+                });
+                setMessages(docs);
+                setLoading(false);
+            }
+        );
 
         return unsubscribe; 
     }, []);

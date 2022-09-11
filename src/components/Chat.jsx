@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef} from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useMsg } from '../contexts/MsgContext'
 import { Form, Button } from 'react-bootstrap'
@@ -10,18 +10,37 @@ export default function Chat() {
   const {getMessages, sendMessage} = useMsg();
   const [messages, setMessages] = React.useState("");
   const [error, setError] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+  const messageWritten = useRef(); 
 
   async function send(e){
     e.preventDefault();
+
+    const msg = messageWritten.current.value;
+    const senderID = currentUser.uid;
+
+    // for later
+    const chatID = 'geral';
+
+    try{
+      setLoading(true);
+      setError('');
+      await sendMessage(senderID, chatID, msg);
+    }
+    catch(error){
+      setError("Failed to send message");
+    }
+
+    setLoading(false);
   }
 
   async function get(){
 
     try{
+      setError('');
       const msgs = await getMessages();
       setMessages(msgs);
       console.log(msgs);
-
     } catch(error) {
       console.warn(error);
       setError(error.message);
@@ -35,7 +54,7 @@ export default function Chat() {
         let message = msg.message;
         let userID = msg.senderID;
 
-        // used for latter in development
+        // used for later in development
         let chat = msg.chatID;
 
         let photoURL, displayName;
@@ -79,7 +98,7 @@ export default function Chat() {
       </Link>
       <div className="diplay-messages">
 
-        { /*&& processMessages(messages)*/ }
+        
         <div className="other-person-msg">
           <p className="msg-author">rodrigo123</p>
           <p className="msg">Boas malta, tudo fixe?</p>
@@ -92,8 +111,8 @@ export default function Chat() {
       </div>
       <div className="send-message">
         <Form className='d-flex align-items-center' onSubmit={send}>
-          <Form.Group id="message">
-            <Form.Control type="text" required />
+          <Form.Group name="message">
+            <Form.Control disabled={loading} type="text" ref={messageWritten} required />
           </Form.Group>
           <Button type="submit" className='w-40'>
             Send
