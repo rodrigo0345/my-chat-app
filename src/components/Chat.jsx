@@ -61,7 +61,7 @@ export default function Chat() {
   async function fetchUserData(id){
     const user = await searchUser(id);
     console.log(user.data());
-    return user?.data()? {name: user.data().displayName, photo: user.data().photoURL}: {name: 'Unknown', photo: ''};
+    return user?.data()? {name: user.data().displayName, photo: user.data().photoURL}: {name: 'Deleted user', photo: ''};
   }
 
   useEffect(() => {
