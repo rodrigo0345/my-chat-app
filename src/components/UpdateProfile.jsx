@@ -50,7 +50,7 @@ export default function UpdateProfile() {
 
     return (
     <>
-        <Card>
+        <Card style={{maxWidth: "450px"}}>
             <Card.Body>
                 <h2 className="text-center mb-4">Update Profile</h2>
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
