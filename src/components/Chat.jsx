@@ -35,18 +35,6 @@ export default function Chat() {
     setLoading(false);
   }
 
-  async function get(){
-
-    try{
-      setError('');
-
-    } catch(error) {
-      console.warn(error);
-      setError(error.message);
-    }
-
-  }
-
   async function processMessages(messages){
     const msgs = await Promise.all(messages.map(async (msg, index) => {
       const senderID = msg.userID;
@@ -72,12 +60,12 @@ export default function Chat() {
 
   async function fetchUserData(id){
     const user = await searchUser(id);
-    return {name: user.data().displayName, photo: user.data().photoURL};
+    console.log(user.data());
+    return user?.data()? {name: user.data().displayName, photo: user.data().photoURL}: {name: 'Unknown', photo: ''};
   }
 
   useEffect(() => {
     processMessages(messages);
-    console.log('messagesToDisplay', displayMessages);
   }, [messages]);
 
   return (

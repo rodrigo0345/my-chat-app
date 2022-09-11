@@ -41,7 +41,6 @@ export default function MsgProvider({ children }) {
         const unsubscribe = onSnapshot(q,
             (querySnapshot) => {
                 const docs = [];
-                console.log('snapshot', querySnapshot.docs)
                 querySnapshot.docs.forEach((doc) => {
                     docs.push({ ...doc.data() });
                 });

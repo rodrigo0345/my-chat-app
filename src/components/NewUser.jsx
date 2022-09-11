@@ -21,9 +21,13 @@ export default function UpdateProfile() {
             username = usernameRef.current.value:
             username = currentUser.username;
         
-        imageRef.current?.value?
-            image = imageRef.current.files[0]:
-            image = currentUser.photoURL;
+        if (imageRef.current?.value) {
+            image = imageRef.current.files[0];
+        }
+        else{
+            setError("You must select an image");
+            return;
+        }
 
         try{
             setLoading(true);
