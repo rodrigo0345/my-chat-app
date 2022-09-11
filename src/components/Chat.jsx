@@ -4,12 +4,14 @@ import { useMsg } from '../contexts/MsgContext'
 import { Form, Button } from 'react-bootstrap'
 import "../styles/Chat.css"
 import { useAuth } from '../contexts/AuthContext'
+import { useEffect } from 'react'
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
   const {messages, sendMessage} = useMsg();
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [displayMessages, setDisplayMessages] = React.useState([]);
   const messageWritten = useRef(); 
 
   async function send(e){
@@ -46,44 +48,37 @@ export default function Chat() {
   }
 
   async function processMessages(messages){
-    return messages.map((msg, index) => {
+    const msgs = await Promise.all(messages.map(async (msg, index) => {
+      const senderID = msg.userID;
+
         let sender = 'other-person';
-        let message = msg.message;
-        let userID = msg.senderID;
-
-        // used for later in development
-        let chat = msg.chatID;
-
-        let photoURL, displayName;
-
-        if(msg.senderID === currentUser.id)
-        {
+        if(currentUser.uid === senderID){
           sender = 'my';
-          photoURL = currentUser.photoURL;
-          displayName = currentUser.displayName;
         }
-        else{
-          try{
-            const user = searchUser(userID);
-            console.log('user', user);
 
-          } catch(error){
-            console.warn(error);
-            setError(error.message);
-            return null;
-          }
-        }
-        return (
-          <div key={index} className={`${sender}-msg`}>
-            <img src={photoURL} alt="avatar" />
-            <p className="msg-author">{displayName}</p>
-            <p className="msg">{message}</p>
+        const data = await fetchUserData(senderID);
+        const element = (
+          <div className={`${sender}-msg`} key={index}>
+            <p className="msg-author">{data.name}</p>
+            <p className="msg">{msg.message}</p>
           </div>
-        )
-      })
+        );
+
+        return element;
+    }));
+
+    setDisplayMessages(msgs);
   }
 
-  console.log('messages', messages);
+  async function fetchUserData(id){
+    const user = await searchUser(id);
+    return {name: user.data().displayName, photo: user.data().photoURL};
+  }
+
+  useEffect(() => {
+    processMessages(messages);
+    console.log('messagesToDisplay', displayMessages);
+  }, [messages]);
 
   return (
     <div>
@@ -92,15 +87,12 @@ export default function Chat() {
         <img id="avatar" src={currentUser.photoURL} alt="" />
       </Link>
       <div className="diplay-messages">
-        <div className="other-person-msg">
-          <p className="msg-author">rodrigo123</p>
-          <p className="msg">Boas malta, tudo fixe?</p>
-        </div>
-        
-        <div className="my-msg">
-          <p className="msg-author">Rodrigo123</p>
-          <p className="msg">Adeus</p>
-        </div>
+        { displayMessages && displayMessages.map(
+          (msg) => {
+          
+            return msg;
+          }
+        ) }
       </div>
       <div className="send-message">
         <Form className='d-flex align-items-center' onSubmit={send}>

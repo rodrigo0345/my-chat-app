@@ -1,8 +1,8 @@
 import React from 'react'
-import { setDoc, collection, doc, onSnapshot } from "firebase/firestore";
+import { setDoc, collection, doc, onSnapshot, query } from "firebase/firestore";
 import { db } from '../firebase';
 import uniqid from 'uniqid';
-import { Timestamp } from 'firebase/firestore';
+import { Timestamp, orderBy } from 'firebase/firestore';
 
 const MsgContext = React.createContext();
 
@@ -36,7 +36,9 @@ export default function MsgProvider({ children }) {
 
     React.useEffect(() => {
         const colChat = collection(db, "geral");
-        const unsubscribe = onSnapshot(colChat,
+        const q = query(colChat, orderBy("timestamp", "asc"));
+
+        const unsubscribe = onSnapshot(q,
             (querySnapshot) => {
                 const docs = [];
                 console.log('snapshot', querySnapshot.docs)

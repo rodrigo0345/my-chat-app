@@ -9,7 +9,7 @@ import {
 import { auth, storage } from '../firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db } from '../firebase';
-import { setDoc, doc} from 'firebase/firestore';
+import { setDoc, doc, getDoc, collection} from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -62,7 +62,10 @@ export function AuthProvider({ children }) {
     }
 
     function searchUser(id){
-        return db.collection("users").doc(id).get();
+        const colUserRef = collection(db, "users");
+        const userRef = doc(colUserRef, id);
+        return getDoc(userRef);
+        //return getDoc(userRef);
     }
 
     useEffect(() => {
