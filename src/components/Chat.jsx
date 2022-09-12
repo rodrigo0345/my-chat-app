@@ -121,7 +121,6 @@ export default function Chat() {
           </button>
         </Form>
       </div>
-      
-    </ChatComponent>
+          </ChatComponent>
   )
 }
