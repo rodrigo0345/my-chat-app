@@ -38,6 +38,9 @@ export default function Signup() {
         <div className="card">
             <h1>Sign Up</h1>
             {error && <Alert variant="danger">{error}</Alert>}
+            { loading && <div className="loading-wrap">
+                <div className="loading" /> 
+            </div> }
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Email</label>

@@ -49,6 +49,9 @@ export default function UpdateProfile() {
 
     return (
     <>
+        { loading && <div className="loading-wrap">
+                <div className="loading" /> 
+            </div> }
         <div className="card">
             <div className="card-body">
                 <h2 className="text-center mb-4">Create Profile</h2>

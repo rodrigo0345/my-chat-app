@@ -25,6 +25,7 @@ export default function Chat() {
   const {messages, sendMessage, notificationsAllowed} = useMsg();
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [loadingScreen, setLoadingScreen] = React.useState(true);
   const [displayMessages, setDisplayMessages] = React.useState([]);
   const messageWritten = useRef(); 
 
@@ -105,8 +106,15 @@ export default function Chat() {
 
   }, [messages]);
 
+  useEffect(() => {
+    setLoadingScreen(false);
+  }, []);
+
   return (
     <ChatWrapper>
+      { loadingScreen && <div className="loading-wrap">
+                <div className="loading" /> 
+            </div> }
       <div className="other-chats">
         <Link to="/chat/geral">Geral</Link>
       </div>

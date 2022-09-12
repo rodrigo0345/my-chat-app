@@ -34,6 +34,12 @@ export default function Login() {
         <div className="card">
             <h1>Login</h1>
             {error && <Alert variant="danger">{error}</Alert>}
+
+            { loading && <div className="loading-wrap">
+                <div className="loading" /> 
+            </div> }
+            
+
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Email</label>
