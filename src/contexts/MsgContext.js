@@ -47,9 +47,12 @@ export default function MsgProvider({ children }) {
     };
 
     React.useEffect(() => {
+        // get the current chat
         const colChat = collection(db, "geral");
+
         const q = query(colChat, orderBy("timestamp", "desc"), limit(10));
 
+        // get all the latest messages
         const unsubscribe = onSnapshot(q,
             (querySnapshot) => {
                 const docs = [];

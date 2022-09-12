@@ -3,14 +3,7 @@ import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext'
 import styled from 'styled-components';
-
-const CardStyled = styled(Card)`
-    max-width: 600px;
-    width: 60%;
-    @media (max-width: 620px) {
-        width: 90%;
-    }
-`
+import '../styles/Login.css';
 
 export default function Login() {
     const emailRef = useRef();
@@ -38,31 +31,25 @@ export default function Login() {
 
     return (
     <>
-        <CardStyled>
-            <Card.Body>
-                <h2 className="text-center mb-4">Log In</h2>
-                {error && <Alert className="alert alert-danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group id="email">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control className="mb-3" ref={emailRef}type="email" required />
-                    </Form.Group>
-                    <Form.Group id="password">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control className="mb-3" ref={passwordRef} type="password" required />
-                    </Form.Group>
-                    <Button type="submit" className='w-100 mt-3'
-                    disabled={loading}>
-                        Log In
-                    </Button>
-                </Form>
-                <div className="w-100 text-center mt-3">
-                    <Link to="/forgot-password">Forgot Password?</Link>
+        <div className="card">
+            <h1>Login</h1>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>Email</label>
+                    <input type="email" ref={emailRef} required className="form-control" />
                 </div>
-
-            </Card.Body>
-        </CardStyled>
-        <div className="w-100 text-center mt-2">
+                <div className="form-group">
+                    <label>Password</label>
+                    <input type="password" ref={passwordRef} required className="form-control" />
+                </div>
+                <button disabled={loading} className="submit" type="submit">Log </button>
+            </form>
+            <div className="forgot-password">
+                <Link to="/forgot-password">Forgot Password?</Link>
+            </div>
+        </div>
+        <div className="w-100 text-center mt-2" style={{color: "white"}}>
             Need an account? <Link to="/signup">Sign Up</Link>
         </div>
     </>

@@ -50,39 +50,37 @@ export default function UpdateProfile() {
 
     return (
     <>
-        <Card style={{maxWidth: "450px"}}>
-            <Card.Body>
-                <h2 className="text-center mb-4">Update Profile</h2>
-                {error && <Alert className="alert alert-danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group id="photo">
-                        <Form.Label className="mt-3">Photo</Form.Label>
-                        <Form.Control ref={imageRef} type="image" height='100'
-                        style={{width: '100px', margin: 'auto'}}
-                        src={currentUser.photoURL? currentUser.photoURL : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
-                        />
-                        <Form.Control ref={imageRef} type="file"
-                        className='mt-3'
-                        />
-                    </Form.Group>
-                    <Form.Group id="username">
-                        <Form.Label className="mt-3">Username</Form.Label>
-                        <Form.Control ref={usernameRef} type="text" maxLength={20} 
-                        defaultValue={currentUser.displayName? currentUser.displayName: ''} 
-                        placeholder='Enter a new username'
-                        />
-                    </Form.Group>
-                    <Form.Group id="email">
-                        <Form.Label className="mt-3">Email</Form.Label>
-                        <Form.Control defaultValue={currentUser.email} ref={emailRef}type="email" required />
-                    </Form.Group>
-                    <Button type="submit" className='w-100 mt-3'
-                    disabled={loading}>
-                        Update
-                    </Button>
-                </Form>
-            </Card.Body>
-        </Card>
+        <div className="card">
+            <h2>Update Profile</h2>
+            {error && <Alert className="alert alert-danger">{error}</Alert>}
+            <form onSubmit={handleSubmit}>
+                <div className="form-group" id="id">
+                    <label className="mt-3">Photo</label>
+                    <Form.Control ref={imageRef} type="image" height='100'
+                    style={{width: '100px', margin: 'auto'}}
+                    src={currentUser.photoURL? currentUser.photoURL : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+                    />
+                    <Form.Control ref={imageRef} type="file"
+                    className='mt-3'
+                    />
+                </div>
+                <div className="form-group" id="username">
+                    <Form.Label className="mt-3">Username</Form.Label>
+                    <Form.Control ref={usernameRef} type="text" maxLength={20} 
+                    defaultValue={currentUser.displayName? currentUser.displayName: ''} 
+                    placeholder='Enter a new username'
+                    />
+                </div>
+                <div className="form-group" id="email">
+                    <Form.Label className="mt-3">Email</Form.Label>
+                    <Form.Control defaultValue={currentUser.email} ref={emailRef}type="email" required />
+                </div>
+                <button type="submit" className='w-100 mt-3'
+                disabled={loading}>
+                    Update
+                </button>
+            </form>
+        </div>
         <div className="w-100 text-center mt-2">
         <Link to="/">Cancel</Link>
         </div>

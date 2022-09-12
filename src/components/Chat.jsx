@@ -13,6 +13,13 @@ const ChatComponent = styled.div`
   }
 `
 
+const ChatWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`
+
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
   const {messages, sendMessage, notificationsAllowed} = useMsg();
@@ -99,30 +106,34 @@ export default function Chat() {
   }, [messages]);
 
   return (
-    <ChatComponent className="chat">
-      <div className="user">
-        <Link to="/profile" >
-          <img id="avatar" src={currentUser.photoURL} alt="" />
-          <p>{currentUser.displayName}</p>
-        </Link>
+    <ChatWrapper>
+      <div className="other-chats">
+        <Link to="/chat/geral">Geral</Link>
       </div>
-      <div className="diplay-messages">
-        { displayMessages && displayMessages.map(
-                                (msg) => {
-                                  return msg;
-                                }
-        ) }
-      </div>
-      <div className="send-message">
-        <Form className='d-flex align-items-center justify-content-around' onSubmit={send}>
-          <Form.Group name="message">
-            <Form.Control disabled={loading} name="message" type="text" ref={messageWritten} required maxLength={'80'} />
-          </Form.Group>
-          <button type="submit" className='w-40'>
-            Send
-          </button>
-        </Form>
-      </div>
-          </ChatComponent>
+      <ChatComponent className="chat">
+        <div className="user">
+          <Link to="/profile" >
+            <img id="avatar" src={currentUser.photoURL} alt="" />
+            <p>{currentUser.displayName}</p>
+          </Link>
+        </div>
+        <div className="diplay-messages">
+          { displayMessages && displayMessages.map(
+                                  (msg) => {
+                                    return msg;
+                                  }
+          ) }
+        </div>
+        <div className="send-message">
+          <form className='d-flex align-items-center justify-content-around' onSubmit={send}>
+              <label for="message">Message</label>
+              <input disabled={loading} name="message" type="text" ref={messageWritten} required maxLength={'80'} />
+            <button type="submit" className='w-40'>
+              Send
+            </button>
+          </form>
+        </div>
+      </ChatComponent>
+    </ChatWrapper>
   )
 }

@@ -1,0 +1,103 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  max-width: 600px;
+  background-color: #BF3668;
+  color: #000;
+  border: 1px solid #972b52;
+  box-shadow: 0 0 10px rgba(191, 54, 104, 0.5);
+  padding: 1.5rem;
+}
+@media screen and (max-width: 768px) {
+  .card {
+    width: 100%;
+    border-radius: 0 !important;
+  }
+}
+.card h1 {
+  color: #BF3668;
+}
+.card form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  width: 75%;
+}
+@media screen and (max-width: 600px) {
+  .card form .form-group {
+    width: 90%;
+  }
+}
+.card form .form-group label {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+.card form .form-group input {
+  box-shadow: 1px 1px 4px black;
+  padding: 0.5rem;
+  border: 1px solid #972b52;
+  border-radius: 0.25rem;
+  background-color: #BF3668;
+  color: #fff;
+  transition: 0.3s;
+  font-weight: 500;
+}
+.card form .form-group input:focus {
+  outline: none;
+  border-color: #d05884;
+  background-color: #e6a8bf;
+  color: #000;
+}
+.card form .form-group input:active {
+  background-color: #e6a8bf;
+}
+.card form button[type=submit] {
+  box-shadow: 1px 1px 4px black;
+  width: 60%;
+  padding: 0.2rem;
+  border: 1px solid #BF3668;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  color: #BF3668;
+  transition: 0.3s;
+  font-weight: 600;
+  margin: 0.7rem 0;
+}
+.card form button[type=submit]:hover {
+  background-color: #d05884;
+  color: #000;
+}
+.card form button[type=submit]:active {
+  opacity: 0.5;
+  background-color: #f2cfdc;
+}
+
+a {
+  color: #ee9323 !important;
+  font-weight: 500;
+  text-decoration: none;
+  transition: 0.3s;
+}
+a:hover {
+  color: #d05884 !important;
+}
+
+.alert, .success {
+  width: 70%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  padding: 0.5rem !important;
+  border-radius: 0.25rem;
+  color: #BF4539 !important;
+  background-color: transparent !important;
+}/*# sourceMappingURL=Login.css.map */

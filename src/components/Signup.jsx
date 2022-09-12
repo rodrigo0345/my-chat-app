@@ -35,31 +35,26 @@ export default function Signup() {
 
     return (
     <>
-        <Card style={{maxWidth: "450px"}} className="w-100">
-            <Card.Body>
-                <h2 className="text-center mb-4">Sign Up</h2>
-                {error && <Alert className="alert alert-danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group id="email">
-                        <Form.Label>Email</Form.Label>
-                        <Form.Control className="mb-3" ref={emailRef}type="email" required />
-                    </Form.Group>
-                    <Form.Group id="password">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control className="mb-3" ref={passwordRef} type="password" required />
-                    </Form.Group>
-                    <Form.Group id="password-confirm">
-                        <Form.Label>Password Confirmation</Form.Label>
-                        <Form.Control className="mb-3" ref={passwordConfirmRef} type="password" required />
-                    </Form.Group>
-                    <Button type="submit" className='w-100 mt-3'
-                    disabled={loading}>
-                        Sign Up
-                    </Button>
-                </Form>
-            </Card.Body>
-        </Card>
-        <div className="w-100 text-center mt-2">
+        <div className="card">
+            <h1>Sign Up</h1>
+            {error && <Alert variant="danger">{error}</Alert>}
+            <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                    <label>Email</label>
+                    <input type="email" ref={emailRef} required className="form-control" />
+                </div>
+                <div className="form-group">
+                    <label>Password</label>
+                    <input type="password" ref={passwordRef} required className="form-control" />
+                </div>
+                <div className="form-group">
+                    <label>Password Confirmation</label>
+                    <input type="password" ref={passwordConfirmRef} required className="form-control" />
+                </div>
+                <button disabled={loading} className="submit" type="submit">Sign Up</button>
+            </form>
+        </div>
+        <div className="w-100 text-center mt-2" style={{color: "white"}}>
             Already have an account? <Link to="/login">Log In</Link>
         </div>
     </>

@@ -11,14 +11,19 @@ import UpdateProfile from "./UpdateProfile";
 import Chat from "./Chat";
 import MsgProvider from "../contexts/MsgContext";
 import NewUser from "./NewUser";
+import styled from "styled-components";
+import '../styles/Routing.css'
+
+const Background = styled.div`
+`;
 
 function Routing() {
 
   return (
     
       <div>
-          <div style={{width: "100%", display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
-          height: `${window.innerHeight}px`}}>
+          <Background style={{ display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
+          height: `${window.innerHeight}px`}} id="background">
             <Router>
               <AuthProvider>
                   <Routes>
@@ -54,7 +59,7 @@ function Routing() {
                   </Routes>
               </AuthProvider>
             </Router>
-          </div>
+          </Background>
       </ div>
     
   );

@@ -2,6 +2,7 @@ import React, {useRef, useState} from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function ForgotPassword() {
     const emailRef = useRef();
@@ -29,27 +30,25 @@ export default function ForgotPassword() {
 
     return (
     <>
-        <Card>
-            <Card.Body>
+        <div className="card">
                 <h2 className="text-center mb-4">Password Reset</h2>
                 {message && <Alert className="alert alert-success">{message}</Alert>}
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group id="email">
-                        <Form.Label className="mt-3">Email</Form.Label>
-                        <Form.Control ref={emailRef}type="email" required />
-                    </Form.Group>
-                    <Button type="submit" className='w-100 mt-3'
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group" id="email">
+                        <label className="mt-3">Email</label>
+                        <input ref={emailRef}type="email" required />
+                    </div>
+                    <button type="submit"
                     disabled={loading}>
                         Reset Password
-                    </Button>
-                </Form>
+                    </button>
+                </form>
                 <div className="w-100 text-center mt-3">
                     <Link to="/login">Log In</Link>
                 </div>
-            </Card.Body>
-        </Card>
-        <div className="w-100 text-center mt-2">
+        </div>
+        <div className="w-100 text-center mt-2" style={{color: "white"}}>
             Need an account? <Link to="/signup">Sign Up</Link>
         </div>
     </>

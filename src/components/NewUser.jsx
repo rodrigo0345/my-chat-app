@@ -49,35 +49,23 @@ export default function UpdateProfile() {
 
     return (
     <>
-        <Card>
-            <Card.Body>
+        <div className="card">
+            <div className="card-body">
                 <h2 className="text-center mb-4">Create Profile</h2>
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group id="photo">
-                        <Form.Label className="mt-3">Photo</Form.Label>
-                        <Form.Control required ref={imageRef} type="image" height='100'
-                        style={{width: '100px', margin: 'auto'}}
-                        src={currentUser.photoURL? currentUser.photoURL : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
-                        />
-                        <Form.Control ref={imageRef} type="file"
-                        className='mt-3'
-                        />
-                    </Form.Group>
-                    <Form.Group id="username">
-                        <Form.Label className="mt-3">Username</Form.Label>
-                        <Form.Control required ref={usernameRef} type="text" maxLength={20} 
-                        defaultValue={currentUser.displayName? currentUser.displayName: ''} 
-                        placeholder='Enter a new username'
-                        />
-                    </Form.Group>
-                    <Button type="submit" className='w-100 mt-3'
-                    disabled={loading}>
-                        Create
-                    </Button>
-                </Form>
-            </Card.Body>
-        </Card>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <label>Username</label>
+                        <input type="text" ref={usernameRef} className="form-control" />
+                    </div>
+                    <div className="form-group">
+                        <label>Profile Image</label>
+                        <input type="file" ref={imageRef} className="form-control" onChange={handleChange} />
+                    </div>
+                    <button disabled={loading} className="submit" type="submit">Create Profile</button>
+                </form>
+            </div>
+        </div>
     </>
     )
 }

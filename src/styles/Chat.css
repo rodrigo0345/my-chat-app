@@ -1,3 +1,8 @@
+:root{
+    --user-height: 50px;
+    --send-message-height: 50px;
+}
+
 .chat{
     color: #FFFFFF;
     border: 1px solid #FFFFFF;
@@ -16,6 +21,7 @@
     justify-content: center;
     background-color: aliceblue;
     border: 1px solid black;
+    max-height: var(--user-height);
 }
 
 .user a{
@@ -49,6 +55,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    max-height: var(--send-message-height);
 }
 
 .send-message input[type="text"]{
