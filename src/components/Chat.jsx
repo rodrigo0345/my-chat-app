@@ -34,15 +34,7 @@ export default function Chat() {
       setLoading(true);
       setError('');
       await sendMessage(senderID, chatID, msg);
-      const notify = await notificationsAllowed();
-      if(notify){
-        new Notification(`New message from ${currentUser.displayName}`, {
-          body: msg,
-          icon: currentUser.photoURL
-        })
-      }
       e.target.message.value = "";
-
     }
     catch(error){
       setError("Failed to send message");
@@ -101,6 +93,23 @@ export default function Chat() {
 
   useEffect(() => {
     processMessages(messages);
+
+    const notify = async () => {
+      if(messages[0].userID === currentUser.uid){
+        return;
+      }
+      
+      const notify = await notificationsAllowed();
+      console.log(messages[0]);
+      if(notify){
+        new Notification(`New message from ${currentUser.displayName}`, {
+          body: `"${messages[0].message}"`,
+          icon: currentUser.photoURL
+        })
+      }
+    }
+    notify();
+
   }, [messages]);
 
   return (
