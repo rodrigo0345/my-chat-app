@@ -56,18 +56,6 @@ export default function Chat() {
         let element;
 
         // just changed the order of the photo (use justify-content: reverse)
-        if(sender === 'my'){
-          element = (
-            <div className={`${sender}-wrapper`} key={index}> 
-              <div className={`${sender}-msg`}>
-                <p className="msg-author">{data.name}</p>
-                <p className="msg">{msg.message}</p>
-              </div>
-              {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
-            </div>
-          );
-        }
-        else{
           element = (
             <div className={`${sender}-wrapper`} key={index}>
               {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
@@ -77,7 +65,6 @@ export default function Chat() {
               </div>
             </div>
           );
-        }
         
 
         return element;
@@ -95,16 +82,15 @@ export default function Chat() {
     processMessages(messages);
 
     const notify = async () => {
-      if(messages[0].userID === currentUser.uid){
+      if(messages[0].userID === currentUser.uid || document.hasFocus()){
         return;
       }
-      
+
       const notify = await notificationsAllowed();
-      console.log(messages[0]);
       if(notify){
         new Notification(`New message from ${currentUser.displayName}`, {
           body: `"${messages[0].message}"`,
-          icon: currentUser.photoURL
+          icon: messages[0].photoURL
         })
       }
     }
@@ -122,10 +108,9 @@ export default function Chat() {
       </div>
       <div className="diplay-messages">
         { displayMessages && displayMessages.map(
-          (msg) => {
-          
-            return msg;
-          }
+                                (msg) => {
+                                  return msg;
+                                }
         ) }
       </div>
       <div className="send-message">

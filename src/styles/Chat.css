@@ -104,7 +104,8 @@
 .my-wrapper{
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    flex-direction: row-reverse;
+    justify-content: flex-reverse;
     width: 100%;
 }
 
