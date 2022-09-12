@@ -2,6 +2,16 @@ import React, {useState} from 'react'
 import { Card, Button, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import styled from 'styled-components';
+
+
+const CardStyled = styled(Card)`
+    max-width: 600px;
+    width: 60%;
+    @media (max-width: 620px) {
+        width: 90%;
+    }
+`
 
 export default function Profile() {
     const { currentUser, logout } = useAuth();
@@ -23,7 +33,7 @@ export default function Profile() {
 
   return (
     <>
-        <Card>
+        <CardStyled>
             <Card.Body className="d-flex flex-column">
                 <h2 className="text-center mb-4">Profile</h2>
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
@@ -40,7 +50,7 @@ export default function Profile() {
                 </Link>
             </Card.Body>
 
-        </Card>
+        </CardStyled>
         <div className="w-100 text-center mt-2">
             <Button variant="link" onClick={handleLogout}>Log Out</Button>
         </div>

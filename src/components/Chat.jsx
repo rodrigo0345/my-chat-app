@@ -15,7 +15,7 @@ const ChatComponent = styled.div`
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
-  const {messages, sendMessage} = useMsg();
+  const {messages, sendMessage, notificationsAllowed} = useMsg();
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [displayMessages, setDisplayMessages] = React.useState([]);
@@ -34,7 +34,15 @@ export default function Chat() {
       setLoading(true);
       setError('');
       await sendMessage(senderID, chatID, msg);
+      const notify = await notificationsAllowed();
+      if(notify){
+        new Notification(`New message from ${currentUser.displayName}`, {
+          body: msg,
+          icon: currentUser.photoURL
+        })
+      }
       e.target.message.value = "";
+
     }
     catch(error){
       setError("Failed to send message");

@@ -90,7 +90,7 @@ export function AuthProvider({ children }) {
         resetPassword,
         updateEmail,
         updateUserInfo,
-        searchUser
+        searchUser, 
     }
     return (
         <AuthContext.Provider value={value}>

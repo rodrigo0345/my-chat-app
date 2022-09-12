@@ -2,6 +2,15 @@ import React, {useRef, useState} from 'react'
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext'
+import styled from 'styled-components';
+
+const CardStyled = styled(Card)`
+    max-width: 600px;
+    width: 60%;
+    @media (max-width: 620px) {
+        width: 90%;
+    }
+`
 
 export default function Login() {
     const emailRef = useRef();
@@ -29,7 +38,7 @@ export default function Login() {
 
     return (
     <>
-        <Card>
+        <CardStyled>
             <Card.Body>
                 <h2 className="text-center mb-4">Log In</h2>
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
@@ -52,7 +61,7 @@ export default function Login() {
                 </div>
 
             </Card.Body>
-        </Card>
+        </CardStyled>
         <div className="w-100 text-center mt-2">
             Need an account? <Link to="/signup">Sign Up</Link>
         </div>

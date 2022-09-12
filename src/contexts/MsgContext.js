@@ -29,9 +29,21 @@ export default function MsgProvider({ children }) {
         });
     }
 
+    async function notificationsAllowed(){
+        const notify =  await Notification.requestPermission();
+
+        let granted = false ;
+        if(notify === "granted"){
+            granted = true;
+        }
+
+        return granted;
+    }
+
     const value = {
         messages,
         sendMessage,
+        notificationsAllowed,
     };
 
     React.useEffect(() => {
