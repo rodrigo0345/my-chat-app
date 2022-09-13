@@ -286,3 +286,14 @@ $dark: #000;
         }
     }
 }
+
+@media screen and (max-width: 768px){
+    .chat{
+        width: 100% !important;
+        border-radius: 0;
+
+        .chat-options{
+            display: none;
+        }
+    }
+}

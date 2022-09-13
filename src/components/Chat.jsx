@@ -1,14 +1,20 @@
 import React, {useRef} from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useMsg } from '../contexts/MsgContext'
-import { Form, Button } from 'react-bootstrap'
 import { useAuth } from '../contexts/AuthContext'
 import { useEffect } from 'react'
 import Header from './Header'
-import { BsFillEmojiLaughingFill, BsFillFileEarmarkImageFill } from 'react-icons/bs'
-import { AiOutlineCloseCircle } from 'react-icons/ai'
-import { Picker } from "emoji-mart";
+import { BsFillFileEarmarkImageFill } from 'react-icons/bs'
+import { GiHamburgerMenu } from 'react-icons/gi'
 import '../styles/chat/chat.css'
+import styled from 'styled-components'
+
+const ChatDiv = styled.div`
+    @media sceen and (max-width: 768px){
+      height: calc(${window.innerHeight}px - 100px);
+    }
+`;
+
 
 
 export default function Chat() {
@@ -147,7 +153,9 @@ export default function Chat() {
   return (
     <>
       <Header />
-      <div className="chat">
+      <ChatDiv 
+      className="chat"
+      >
         <div className="chat-options">
           <div className="other-chats-wrapper">
             
@@ -199,7 +207,7 @@ export default function Chat() {
           </div>
 
         </div>
-      </div>
+      </ChatDiv>
 
     </>
   )

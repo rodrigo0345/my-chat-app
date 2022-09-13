@@ -233,4 +233,14 @@
   cursor: pointer;
   background-color: #BF3668;
   border-radius: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .chat {
+    width: 100% !important;
+    border-radius: 0;
+  }
+  .chat .chat-options {
+    display: none;
+  }
 }/*# sourceMappingURL=chat.css.map */
