@@ -111,7 +111,10 @@ $dark: #000;
             background-color: $light;
             padding: 20px 10px;
             
-
+            img{
+                max-width: 100%;
+            }
+        
             .other-person-wrapper{
                 margin-bottom: 10px;
                 display: flex;

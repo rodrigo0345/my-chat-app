@@ -13,7 +13,7 @@ import '../styles/chat/chat.css'
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
-  const {messages, sendMessage, notificationsAllowed, savePhotoOnSever} = useMsg();
+  const {messages, sendMessage, notificationsAllowed, savePhotoOnServer} = useMsg();
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [loadingScreen, setLoadingScreen] = React.useState(true);
@@ -65,7 +65,11 @@ export default function Chat() {
                 {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
                 <p className="msg-author">{data.name}</p>
               </div>
-              <p className={`msg ${msgType}`}>{msg.message}</p>
+              {msgType === "image"? 
+              <a href={msg.message} target="_blank">
+                <img src={msg.message}/>
+              </a>:
+              <p className={`msg ${msgType}`}>{msg.message}</p>}
             </div>
           );
         
@@ -84,14 +88,13 @@ export default function Chat() {
 
   async function sendImage(e){
     const image = e.target.files[0];
-
-    console.log(image);
     if(image === undefined) return;
 
     try{
       setLoading(true);
       setError('');
-      const url = await savePhotoOnSever(image);
+      const url = await savePhotoOnServer(currentUser.uid, 'geral', image);
+      console.log('url', url);
       await sendMessage(currentUser.uid, 'geral', url, 'image');
     }catch(error){
       setError("Failed to send image");
@@ -135,8 +138,8 @@ export default function Chat() {
             
           </div>
         </div>
+        {loading? <div className="loading-screen"><div className="lds-ripple"><div></div><div></div></div></div>: null}
         <div className="chat-messages">
-          {loading? <div className="loading-screen"><div className="lds-ripple"><div></div><div></div></div></div>: null}
 
           <div className="chat-header">
               <h1>Group: Geral</h1>

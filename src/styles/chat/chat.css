@@ -78,6 +78,9 @@
   background-color: #fff;
   padding: 20px 10px;
 }
+.chat .chat-messages .messages img {
+  max-width: 100%;
+}
 .chat .chat-messages .messages .other-person-wrapper {
   margin-bottom: 10px;
   display: flex;

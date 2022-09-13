@@ -32,17 +32,18 @@ export default function MsgProvider({ children }) {
         });
     }
 
-    async function savePhotoOnSever(userID, chatID, file){
-        const fileRef = ref(storage, `images/${userID}/${chatID}/${uniqid()}`);
+    async function savePhotoOnServer(userID, chatID, file){
+        const fileRef = ref(storage, `images/${chatID}/${userID}/${uniqid()}`);
         
+        let fileUrl;
         try{
             await uploadBytes(fileRef, file);
-            const fileUrl = await getDownloadURL(fileRef);
-            return fileUrl;
+            fileUrl = await getDownloadURL(fileRef);
         }catch(err){
             console.warn(err);
             return err;
         }
+        return fileUrl;
     }
 
     async function notificationsAllowed(){
@@ -60,7 +61,7 @@ export default function MsgProvider({ children }) {
         messages,
         sendMessage,
         notificationsAllowed,
-        savePhotoOnSever,
+        savePhotoOnServer,
     };
 
     React.useEffect(() => {
