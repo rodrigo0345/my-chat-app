@@ -20,6 +20,7 @@ export default function Chat() {
   const [displayMessages, setDisplayMessages] = React.useState([]);
   const [input, setInput] = React.useState('');
   const messageWritten = useRef(); 
+  const messageEl = useRef(null);
 
   async function send(e){
     e.preventDefault();
@@ -101,6 +102,13 @@ export default function Chat() {
     }
   }
 
+  const  handleScroll = e => {
+    let element = e.target;
+    if (element.scrollTop===0) {
+      //fetch messages
+    }
+ }
+
   // notifications needs work!
   useEffect(() => {
     processMessages(messages);
@@ -119,6 +127,13 @@ export default function Chat() {
       }
     }
     notify();
+
+    if (messageEl) {
+      messageEl.current.addEventListener('DOMNodeInserted', event => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+      });
+    }
 
   }, [messages]);
 
@@ -145,7 +160,7 @@ export default function Chat() {
               <h1>Group: Geral</h1>
           </div>
 
-          <div className="messages">
+          <div className="messages" onScroll={handleScroll} ref={messageEl}>
             {displayMessages}
           </div>
 
