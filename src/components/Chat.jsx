@@ -86,6 +86,7 @@ export default function Chat() {
     return user?.data()? {name: user.data().displayName, photo: user.data().photoURL}: {name: 'Deleted user', photo: undefined};
   }
 
+  // notifications needs work!
   useEffect(() => {
     processMessages(messages);
 
@@ -110,38 +111,10 @@ export default function Chat() {
     setLoadingScreen(false);
   }, []);
 
+  //make a header component seperatly and use it here and in profile
+  // style it according to +/- instagram
+  
   return (
-    <ChatWrapper>
-      { loadingScreen && <div className="loading-wrap">
-                <div className="loading" /> 
-            </div> }
-      <div className="other-chats">
-        <Link to="/chat/geral">Geral</Link>
-      </div>
-      <ChatComponent className="chat">
-        <div className="user">
-          <Link to="/profile" >
-            <img id="avatar" src={currentUser.photoURL} alt="" />
-            <p>{currentUser.displayName}</p>
-          </Link>
-        </div>
-        <div className="diplay-messages">
-          { displayMessages && displayMessages.map(
-                                  (msg) => {
-                                    return msg;
-                                  }
-          ) }
-        </div>
-        <div className="send-message">
-          <form className='d-flex align-items-center justify-content-around' onSubmit={send}>
-              <label for="message">Message</label>
-              <input disabled={loading} name="message" type="text" ref={messageWritten} required maxLength={'80'} />
-            <button type="submit" className='w-40'>
-              Send
-            </button>
-          </form>
-        </div>
-      </ChatComponent>
-    </ChatWrapper>
+    <></>
   )
 }
