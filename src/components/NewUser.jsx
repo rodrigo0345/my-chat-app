@@ -63,7 +63,7 @@ export default function UpdateProfile() {
                     </div>
                     <div className="form-group">
                         <label>Profile Image</label>
-                        <input type="file" ref={imageRef} className="form-control" onChange={handleChange} />
+                        <input type="file" ref={imageRef} accept="image/*" className="form-control" onChange={handleChange} />
                     </div>
                     <button disabled={loading} className="submit" type="submit">Create Profile</button>
                 </form>

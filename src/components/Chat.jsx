@@ -6,16 +6,19 @@ import { useAuth } from '../contexts/AuthContext'
 import { useEffect } from 'react'
 import Header from './Header'
 import { BsFillEmojiLaughingFill, BsFillFileEarmarkImageFill } from 'react-icons/bs'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
+import { Picker } from "emoji-mart";
 import '../styles/chat/chat.css'
 
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
-  const {messages, sendMessage, notificationsAllowed} = useMsg();
+  const {messages, sendMessage, notificationsAllowed, savePhotoOnSever} = useMsg();
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [loadingScreen, setLoadingScreen] = React.useState(true);
   const [displayMessages, setDisplayMessages] = React.useState([]);
+  const [input, setInput] = React.useState('');
   const messageWritten = useRef(); 
 
   async function send(e){
@@ -23,6 +26,8 @@ export default function Chat() {
 
     const msg = messageWritten.current.value;
     const senderID = currentUser.uid;
+    
+    if(msg === '') return;
 
     // for later
     const chatID = 'geral';
@@ -42,7 +47,8 @@ export default function Chat() {
 
   async function processMessages(messages){
     const msgs = await Promise.all(messages.map(async (msg, index) => {
-      const senderID = msg.userID;
+        const senderID = msg.userID;
+        const msgType = msg.type;
 
         let sender = 'other-person';
         if(currentUser.uid === senderID){
@@ -59,7 +65,7 @@ export default function Chat() {
                 {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
                 <p className="msg-author">{data.name}</p>
               </div>
-              <p className="msg">{msg.message}</p>
+              <p className={`msg ${msgType}`}>{msg.message}</p>
             </div>
           );
         
@@ -73,6 +79,23 @@ export default function Chat() {
   async function fetchUserData(id){
     const user = await searchUser(id);
     return user?.data()? {name: user.data().displayName, photo: user.data().photoURL}: {name: 'Deleted user', photo: undefined};
+  }
+
+
+  async function sendImage(e){
+    const image = e.target.files[0];
+
+    console.log(image);
+    if(image === undefined) return;
+
+    try{
+      setLoading(true);
+      setError('');
+      const url = await savePhotoOnSever(image);
+      await sendMessage(currentUser.uid, 'geral', url, 'image');
+    }catch(error){
+      setError("Failed to send image");
+    }
   }
 
   // notifications needs work!
@@ -108,80 +131,55 @@ export default function Chat() {
       <Header />
       <div className="chat">
         <div className="chat-options">
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
-          </div>
-          <div className="other-chat">
-            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
-            <p>Person name</p>
+          <div className="other-chats-wrapper">
+            
           </div>
         </div>
         <div className="chat-messages">
           {loading? <div className="loading-screen"><div className="lds-ripple"><div></div><div></div></div></div>: null}
-          <div className="chat-header">
 
+          <div className="chat-header">
+              <h1>Group: Geral</h1>
           </div>
+
           <div className="messages">
-            {displayMessages
-            }
+            {displayMessages}
           </div>
+
           <div className="chat-footer">
+
             <form onSubmit={send}>
-              <div className="select-emoji">
-                <BsFillEmojiLaughingFill/>
-              </div>
-              <input type="text" name="message" ref={messageWritten} placeholder="Type a message..."/>
+
+              <input 
+              type="text" 
+              name="message" 
+              id="new-text" 
+              ref={messageWritten} 
+              placeholder="Type a message..."
+              />
+
               <div className="send">
                 <button type="submit" disabled={loading} className="send-text">Send</button>
-                <button
-                type="submit"
+                
+                <div
+                type="file"
                 className='send-image'>
-                  <BsFillFileEarmarkImageFill />
-                </button>
+                  <label for="chooseFile">
+                    <BsFillFileEarmarkImageFill />
+                  </label>
+                  <input 
+                  onChange={sendImage}
+                  type="file" 
+                  id="chooseFile" 
+                  accept="image/*"
+                  />
+                </div>
               </div>
+
             </form>
+
           </div>
+
         </div>
       </div>
 
