@@ -117,7 +117,8 @@ export default function Chat() {
 
   // notifications needs work!
   useEffect(() => {
-    processMessages(messages);
+    setLoading(true);
+    processMessages(messages).then(() => {setLoading(false); setLoadingScreen(false);});
 
     const notify = async () => {
       if(messages[0].userID === currentUser.uid || document.hasFocus()){
@@ -134,6 +135,7 @@ export default function Chat() {
     }
     notify();
 
+    // make the user focus on the end of the chat
     if (messageEl) {
       messageEl.current.addEventListener('DOMNodeInserted', event => {
         const { currentTarget: target } = event;
@@ -144,8 +146,11 @@ export default function Chat() {
   }, [messages]);
 
   useEffect(() => {
+    messageEl.current.scroll({ top: messageEl.current.scrollHeight, behavior: 'smooth' });
     setLoadingScreen(false);
   }, []);
+
+  
 
   //make a header component seperatly and use it here and in profile
   // style it according to +/- instagram
@@ -161,8 +166,12 @@ export default function Chat() {
             
           </div>
         </div>
-        {loading? <div className="loading-screen"><div className="lds-ripple"><div></div><div></div></div></div>: null}
+        
         <div className="chat-messages">
+
+          { loading && <div className="loading">
+                <div className="loading-icon" /> 
+            </div> }
 
           <div className="chat-header">
               <h1>Group: Geral</h1>
