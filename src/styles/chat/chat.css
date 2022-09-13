@@ -1,7 +1,8 @@
 .chat {
+  max-width: 900px;
   background-color: #fff;
   color: #000;
-  height: 70%;
+  height: 80%;
   width: 90%;
   border: 1px solid #3F0640;
   box-shadow: 1px 1px 10px #3F0640;
@@ -9,20 +10,18 @@
   display: flex;
 }
 .chat .chat-options {
-  margin: 20px 0;
+  margin: auto 0;
   overflow-y: auto;
   height: 90%;
-  display: flex;
-  flex-direction: column;
   gap: 10px;
-  align-items: center;
-  justify-content: flex-end;
+  min-width: 250px;
 }
 .chat .chat-options .other-chat {
   cursor: pointer;
   display: flex;
   align-items: center;
-  border: 1px solid #3F0640;
+  border-top: 1px solid #3F0640;
+  border-bottom: 1px solid #3F0640;
   padding: 0.6em;
 }
 .chat .chat-options .other-chat p {
@@ -41,4 +40,154 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
+}
+.chat .chat-messages {
+  display: grid;
+  grid-template-rows: 1fr 8fr 1fr;
+  height: 100%;
+  background-color: black;
+  width: 100%;
+  border-radius: 0 10px 10px 0;
+}
+.chat .chat-messages .chat-header {
+  border-radius: 0 10px 0 0;
+  background-color: rgba(191, 54, 104, 0.5);
+}
+.chat .chat-messages .messages {
+  overflow-y: auto;
+  background-color: #fff;
+  padding: 20px 10px;
+}
+.chat .chat-messages .messages .other-person-wrapper {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.chat .chat-messages .messages .other-person-wrapper .other-person-msg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chat .chat-messages .messages .other-person-wrapper .other-person-msg #avatar {
+  align-self: flex-start;
+  border: 1px solid #F2CA52;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center center;
+     object-position: center center;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.chat .chat-messages .messages .other-person-wrapper .other-person-msg .msg-author {
+  margin: 0;
+  font-weight: 500;
+}
+.chat .chat-messages .messages .other-person-wrapper .msg {
+  border: 1px solid #F2CA52;
+  color: #000;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 10px 10px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.chat .chat-messages .messages .my-wrapper {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.chat .chat-messages .messages .my-wrapper .my-msg {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: row-reverse;
+  justify-content: flex-start;
+}
+.chat .chat-messages .messages .my-wrapper .my-msg .msg-author {
+  margin: 0;
+  font-weight: 500;
+}
+.chat .chat-messages .messages .my-wrapper .my-msg #avatar {
+  align-self: flex-start;
+  border: 1px solid #F2CA52;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center center;
+     object-position: center center;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+.chat .chat-messages .messages .my-wrapper .msg {
+  background-color: #BF3668;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin: 10px 20px;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+.chat .chat-messages .chat-footer {
+  border-radius: 0 0 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+}
+.chat .chat-messages .chat-footer form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 2px 10px;
+  border: 1px solid #3F0640;
+}
+.chat .chat-messages .chat-footer form .select-emoji {
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.chat .chat-messages .chat-footer form button {
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  transition: 0.3s;
+  font-weight: 500;
+  border-radius: 5px;
+}
+.chat .chat-messages .chat-footer form input {
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  padding: 0 10px;
+  outline: 0;
+}
+.chat .chat-messages .chat-footer form .send {
+  display: flex;
+}
+.chat .chat-messages .chat-footer form .send button[type=submit]:hover {
+  color: #fff !important;
+  cursor: pointer;
+  border: none;
+  background-color: #BF3668;
+  color: #3F0640;
+}
+.chat .chat-messages .chat-footer form .send .send-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }/*# sourceMappingURL=chat.css.map */

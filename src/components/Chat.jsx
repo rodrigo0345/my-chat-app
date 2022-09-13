@@ -55,11 +55,11 @@ export default function Chat() {
         // just changed the order of the photo (use justify-content: reverse)
           element = (
             <div className={`${sender}-wrapper`} key={index}>
-              {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
               <div className={`${sender}-msg`}>
+                {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
                 <p className="msg-author">{data.name}</p>
-                <p className="msg">{msg.message}</p>
               </div>
+              <p className="msg">{msg.message}</p>
             </div>
           );
         
@@ -163,7 +163,7 @@ export default function Chat() {
 
           </div>
           <div className="messages">
-            {//displayMessages
+            {displayMessages
             }
           </div>
           <div className="chat-footer">
