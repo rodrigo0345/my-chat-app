@@ -1,0 +1,44 @@
+.chat {
+  background-color: #fff;
+  color: #000;
+  height: 70%;
+  width: 90%;
+  border: 1px solid #3F0640;
+  box-shadow: 1px 1px 10px #3F0640;
+  border-radius: 10px;
+  display: flex;
+}
+.chat .chat-options {
+  margin: 20px 0;
+  overflow-y: auto;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-end;
+}
+.chat .chat-options .other-chat {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: 1px solid #3F0640;
+  padding: 0.6em;
+}
+.chat .chat-options .other-chat p {
+  font-size: large;
+  font-weight: 500;
+  margin: 0 10px;
+}
+.chat .chat-options .other-chat img {
+  border: 2px solid #3F0640;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}/*# sourceMappingURL=chat.css.map */

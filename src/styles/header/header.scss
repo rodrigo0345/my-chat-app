@@ -1,0 +1,93 @@
+$main-color: #BF3668;
+$secondary-color: #3F0640;
+$tertiary-color: #F2CA52;
+$quaternary-color: #F2AA52;
+$quinary-color: #BF4539;
+
+$main-color-light: lighten($main-color, 10%);
+$main-color-dark: darken($main-color, 10%);
+$main-color-transparent: rgba($main-color, 0.5);
+$light: #fff;
+$dark: #000;
+
+@media (prefers-color-scheme: dark) {
+  $main-color: #BF3668;
+  $secondary-color: #3F0640;
+  $tertiary-color: #F2CA52;
+  $quaternary-color: #F2AA52;
+  $quinary-color: #BF4539;
+
+  $main-color-light: lighten($main-color, 10%);
+  $main-color-dark: darken($main-color, 10%);
+  $main-color-transparent: rgba($main-color, 0.5);
+  $light: #000;
+    $dark: #fff;
+}
+
+.header{
+    z-index: 10;
+    position: absolute;
+    top: 0;
+    background-color: $light;
+    color: $dark;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+
+    .profile-pic{
+        height: 100%;
+        margin: 0 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        
+        img{
+            border: 2px solid $secondary-color;
+            object-fit: cover;
+            object-position: center;
+            background-color: $light;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        p{
+            font-weight: 500;
+            font-size: 1.5em;
+            margin: 0;
+        }
+    }
+
+    .menu{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-width: 100px;
+        gap: 2em;
+        margin: 0 10px;
+        list-style: none;
+        font-size: 1.5em;
+
+        li:hover{
+            a{
+                color: $quaternary-color !important;
+            }
+            color: $main-color;
+        }
+    
+        a{
+            color: $dark !important;
+            text-decoration: none !important;
+        }
+        
+        @media (max-width: 768px) {
+            display: none;
+        }
+    }
+}

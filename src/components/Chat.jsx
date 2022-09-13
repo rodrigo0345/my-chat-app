@@ -2,23 +2,12 @@ import React, {useRef} from 'react'
 import { Link, Navigate } from 'react-router-dom'
 import { useMsg } from '../contexts/MsgContext'
 import { Form, Button } from 'react-bootstrap'
-import "../styles/Chat.css"
 import { useAuth } from '../contexts/AuthContext'
 import { useEffect } from 'react'
-import styled from 'styled-components'
+import Header from './Header'
+import { BsFillEmojiLaughingFill, BsFillFileEarmarkImageFill } from 'react-icons/bs'
+import '../styles/chat/chat.css'
 
-const ChatComponent = styled.div`
-  @media screen and (max-width: 768px) {
-    height: ${window.innerHeight}px;
-  }
-`
-
-const ChatWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-`
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
@@ -115,6 +104,87 @@ export default function Chat() {
   // style it according to +/- instagram
   
   return (
-    <></>
+    <>
+      <Header />
+      <div className="chat">
+        <div className="chat-options">
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+          <div className="other-chat">
+            <img src="https://imgs.search.brave.com/G1BmhUXIZe1h9Gr4s2xso3ON4umPfHOVfrFbA8dQaXk/rs:fit:1200:1200:1/g:ce/aHR0cHM6Ly9ib2Jy/YWxleS5maWxlcy53/b3JkcHJlc3MuY29t/LzIwMTYvMDgvaW1h/Z2UxLmpwZWc_dz0x/ODAw" alt="avatar" />
+            <p>Person name</p>
+          </div>
+        </div>
+        <div className="chat-messages">
+          {loading? <div className="loading-screen"><div className="lds-ripple"><div></div><div></div></div></div>: null}
+          <div className="chat-header">
+
+          </div>
+          <div className="messages">
+            {//displayMessages
+            }
+          </div>
+          <div className="chat-footer">
+            <form onSubmit={send}>
+              <div className="select-emoji">
+                <BsFillEmojiLaughingFill/>
+              </div>
+              <input type="text" name="message" ref={messageWritten} placeholder="Type a message..."/>
+              <div className="send">
+                <button type="submit" disabled={loading} className="send-text">Send</button>
+                <button
+                type="submit"
+                className='send-image'>
+                  <BsFillFileEarmarkImageFill />
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </>
   )
 }

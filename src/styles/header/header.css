@@ -1,0 +1,64 @@
+.header {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  background-color: #fff;
+  color: #000;
+  padding: 10px;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+.header .profile-pic {
+  height: 100%;
+  margin: 0 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.header .profile-pic img {
+  border: 2px solid #3F0640;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -o-object-position: center;
+     object-position: center;
+  background-color: #fff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.header .profile-pic p {
+  font-weight: 500;
+  font-size: 1.5em;
+  margin: 0;
+}
+.header .menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 100px;
+  gap: 2em;
+  margin: 0 10px;
+  list-style: none;
+  font-size: 1.5em;
+}
+.header .menu li:hover {
+  color: #BF3668;
+}
+.header .menu li:hover a {
+  color: #F2AA52 !important;
+}
+.header .menu a {
+  color: #000 !important;
+  text-decoration: none !important;
+}
+@media (max-width: 768px) {
+  .header .menu {
+    display: none;
+  }
+}/*# sourceMappingURL=header.css.map */
