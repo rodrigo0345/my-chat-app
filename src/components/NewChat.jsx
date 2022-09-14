@@ -9,6 +9,7 @@ export default function NewChat() {
     const [error, setError] = useState('');
     const [userResults, setUserResults] = useState([]);
     const { retrieveUsers, retrieveAllUsers } = useAuth();
+    const [usersChecked, setUsersChecked] = useState([]);
     const { searchRef } = useRef();
     
     async function filterResult(e){
@@ -26,10 +27,10 @@ export default function NewChat() {
             users.forEach(user => {
                 const element = (
                     <div className="option">
-                        <label htmlFor={user.uid}>
+                        <label htmlFor={user.id}>
                             {user.data().displayName}
                         </label>
-                        <input type="checkbox" name={user.data().displayName} id={user.uid}/>
+                        <input type="checkbox" name={user.data().displayName} id={user.id}/>
                     </div>
                 );
                 elem.push(element);
@@ -47,6 +48,20 @@ export default function NewChat() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
 
+    function addOrRemoveUser(e){
+        
+        const userID = e.target.id;
+        const userName = e.target.name;
+        const checked = e.target.checked;
+
+        if(checked){
+            setUsersChecked(prev => [...prev, {id: userID, name: userName}]);
+            return;
+        }
+
+        setUsersChecked(prev => prev.filter(user => user.id !== userID));
+    }
+
     async function init(){
         try{
             const users = await retrieveAllUsers();
@@ -54,10 +69,10 @@ export default function NewChat() {
             users.forEach(user => {
                 const element = (
                     <div className="option">
-                        <label htmlFor={user.uid}>
+                        <label htmlFor={user.id}>
                             {user.data().displayName}
                         </label>
-                        <input type="checkbox" name={user.data().displayName} id={user.uid} on/>
+                        <input type="checkbox" name={user.data().displayName} id={user.id} onClick={addOrRemoveUser}/>
                     </div>
                 );
                 elem.push(element);
@@ -103,6 +118,10 @@ export default function NewChat() {
                                 {userResults.length === 0? <a>No users found</a>:userResults}
                             </div>
                         </div>
+                    </div>
+                    <div className="form-group show-users">
+                        <label>Users</label>
+                        {usersChecked.map(user => <p>{user.name}</p>)}
                     </div>
                     <button disabled={loading} className="submit" type="submit">Create Room</button>
                 </form>

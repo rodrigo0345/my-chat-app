@@ -112,3 +112,13 @@ $dark: #000;
     background-color: transparent;
     margin: 0 10px;
   }
+
+  .show-users{
+    max-height: 100px;
+    overflow-y: auto;
+
+    p{
+      margin: 0 10px;
+      font-weight: 500;
+    }
+  }

@@ -92,4 +92,13 @@
 .option input {
   background-color: transparent;
   margin: 0 10px;
+}
+
+.show-users {
+  max-height: 100px;
+  overflow-y: auto;
+}
+.show-users p {
+  margin: 0 10px;
+  font-weight: 500;
 }/*# sourceMappingURL=newChat.css.map */
