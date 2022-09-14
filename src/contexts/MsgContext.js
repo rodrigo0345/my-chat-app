@@ -16,6 +16,7 @@ export default function MsgProvider({ children }) {
 
     const [ loading, setLoading ] = React.useState(true);
     const [ messages, setMessages ] = React.useState([]);
+    const [ chats, setChats ] = React.useState([]);
 
     // used for later
     const [ currentChat, setCurrentChat ] = React.useState(null);
@@ -57,14 +58,29 @@ export default function MsgProvider({ children }) {
         return granted;
     }
 
+    function addChat(name, users, photoURL){
+        return setDoc(doc(colRef, uniqid()), {
+            chatID: uniqid(),
+            name: name,
+            users: users,
+            photoURL: photoURL,
+        });
+
+    }
+
     const value = {
         messages,
         sendMessage,
         notificationsAllowed,
         savePhotoOnServer,
+        chats,
+        currentChat,
+        setCurrentChat,
     };
 
     React.useEffect(() => {
+        setLoading(true);
+
         // get the current chat
         const colChat = collection(db, "geral");
 
@@ -83,6 +99,26 @@ export default function MsgProvider({ children }) {
         );
 
         return unsubscribe; 
+    }, []);
+
+    React.useEffect(() => {
+        setLoading(true);
+
+        const colChat = collection(db, "savedChats");
+
+        // get all the chats
+        const unsubscribe = onSnapshot(colChat,
+            (querySnapshot) => {
+                const docs = [];
+                querySnapshot.docs.forEach((doc) => {
+                    docs.push({ ...doc.data() });
+                });
+                setChats(docs);
+                setLoading(false);
+            }
+        );
+
+        return unsubscribe;
     }, []);
 
   return (

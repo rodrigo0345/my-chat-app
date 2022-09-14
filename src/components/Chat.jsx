@@ -19,12 +19,13 @@ const ChatDiv = styled.div`
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
-  const {messages, sendMessage, notificationsAllowed, savePhotoOnServer} = useMsg();
+  const {messages, sendMessage, notificationsAllowed, savePhotoOnServer, chats, currentChat, setCurrentChat} = useMsg();
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [loadingScreen, setLoadingScreen] = React.useState(true);
   const [displayMessages, setDisplayMessages] = React.useState([]);
   const [input, setInput] = React.useState('');
+  const [otherChats, setOtherChats] = React.useState([]);
   const messageWritten = useRef(); 
   const messageEl = useRef(null);
 
@@ -37,7 +38,7 @@ export default function Chat() {
     if(msg === '') return;
 
     // for later
-    const chatID = 'geral';
+    const chatID = currentChat;
 
     try{
       setLoading(true);
@@ -87,6 +88,32 @@ export default function Chat() {
     setDisplayMessages(msgs.reverse());
   }
 
+  async function processOtherChats(){
+    const filterChats = chats.filter(async (chat, index) => {
+
+      // check if the user is in the chat
+      if(!chat.users.includes(currentUser.uid)){ return false; }
+
+      // check if the chat is not the current chat
+      if(chat.chatID === currentChat){ return false; }
+
+      return true;
+    });
+
+    const otherChatsAux = filterChats.map( (chat, index) => {
+      return (
+        <div className="other-chat" onClick={() => {
+          setCurrentChat(chat.chatID);
+        }}>
+            <img src={chat.photoURL} alt="chat-image" />
+            <p>{chat.name}</p>
+        </div>
+      )
+    })
+
+    setOtherChats(otherChatsAux);
+  }
+
   async function fetchUserData(id){
     const user = await searchUser(id);
     return user?.data()? {name: user.data().displayName, photo: user.data().photoURL}: {name: 'Deleted user', photo: undefined};
@@ -101,7 +128,6 @@ export default function Chat() {
       setLoading(true);
       setError('');
       const url = await savePhotoOnServer(currentUser.uid, 'geral', image);
-      console.log('url', url);
       await sendMessage(currentUser.uid, 'geral', url, 'image');
     }catch(error){
       setError("Failed to send image");
@@ -115,10 +141,13 @@ export default function Chat() {
     }
  }
 
-  // notifications needs work!
+  // notifications needs work! and loads all the messages in the chat
   useEffect(() => {
     setLoading(true);
-    processMessages(messages).then(() => {setLoading(false); setLoadingScreen(false);});
+    processMessages(messages).then(() => {
+      setLoading(false); 
+      setLoadingScreen(false);
+    });
 
     const notify = async () => {
       if(messages[0].userID === currentUser.uid || document.hasFocus()){
@@ -143,17 +172,20 @@ export default function Chat() {
       });
     }
 
-  }, [messages]);
+  }, [messages, currentChat]);
 
+  // scroll to the end of the chat
+  // assign to current chat to geral
   useEffect(() => {
     messageEl.current.scroll({ top: messageEl.current.scrollHeight, behavior: 'smooth' });
     setLoadingScreen(false);
+    setCurrentChat('geral');
   }, []);
 
-  
-
-  //make a header component seperatly and use it here and in profile
-  // style it according to +/- instagram
+  useEffect(() => {
+    console.log(currentChat);
+    processOtherChats();
+  }, [chats]);
   
   return (
     <>
@@ -163,7 +195,11 @@ export default function Chat() {
       >
         <div className="chat-options">
           <div className="other-chats-wrapper">
-            
+              <div className="other-chat">
+                <img src="" alt="" />
+                <p>Chat name</p>
+              </div>
+              {otherChats}
           </div>
         </div>
         
@@ -174,7 +210,7 @@ export default function Chat() {
             </div> }
 
           <div className="chat-header">
-              <h1>Group: Geral</h1>
+              <h1>Chat: {currentChat}</h1>
           </div>
 
           <div className="messages" onScroll={handleScroll} ref={messageEl}>
