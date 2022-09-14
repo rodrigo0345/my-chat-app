@@ -210,6 +210,9 @@ export default function Chat() {
             </div> }
 
           <div className="chat-header">
+            <Link to="new-chat">
+              click
+            </Link>
               <h1>Chat: {currentChat}</h1>
           </div>
 

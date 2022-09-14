@@ -11,6 +11,7 @@ import UpdateProfile from "./UpdateProfile";
 import Chat from "./Chat";
 import MsgProvider from "../contexts/MsgContext";
 import NewUser from "./NewUser";
+import NewChat from "./NewChat";
 import styled from "styled-components";
 import '../styles/Routing.css'
 
@@ -53,6 +54,14 @@ function Routing() {
                         <NewUser />
                       </PrivateRoute>
                     } />
+                    <Route exact path={"/new-chat"} element=
+                      {
+                        <PrivateRoute>
+                          <MsgProvider>
+                            <NewChat />
+                          </MsgProvider>
+                        </PrivateRoute>
+                      } /> 
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/login" element={<Login />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
