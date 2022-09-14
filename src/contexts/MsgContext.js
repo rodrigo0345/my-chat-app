@@ -65,7 +65,6 @@ export default function MsgProvider({ children }) {
             users: users,
             photoURL: photoURL,
         });
-
     }
 
     const value = {

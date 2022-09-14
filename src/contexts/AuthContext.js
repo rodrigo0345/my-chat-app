@@ -9,7 +9,7 @@ import {
 import { auth, storage } from '../firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { db } from '../firebase';
-import { setDoc, doc, getDoc, collection} from 'firebase/firestore';
+import { setDoc, doc, getDoc, collection, getDocs, where, query, limit} from 'firebase/firestore';
 
 const AuthContext = React.createContext();
 
@@ -71,6 +71,12 @@ export function AuthProvider({ children }) {
         return getDoc(userRef);
     }
 
+    function retrieveUsers(name=""){
+        const colRef = collection(db, "users");
+        const q = query(colRef, where("displayName", "array-contains", name), limit(6)); 
+        return getDocs(q);
+    } 
+
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             setCurrentUser(user);
@@ -91,6 +97,7 @@ export function AuthProvider({ children }) {
         updateEmail,
         updateUserInfo,
         searchUser, 
+        retrieveUsers
     }
     return (
         <AuthContext.Provider value={value}>
