@@ -8,18 +8,33 @@ export default function NewChat() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [userResults, setUserResults] = useState([]);
-    const { retrieveUsers } = useAuth();
+    const { retrieveUsers, retrieveAllUsers } = useAuth();
     const { searchRef } = useRef();
     
     async function filterResult(e){
     
         try{
             const search = e.target.value;
+
+            if(search === ''){
+                init();
+                return;
+            }
             const users =  await retrieveUsers(search);
 
+            let elem = [];
             users.forEach(user => {
-                console.log(user.data());
+                const element = (
+                    <div className="option">
+                        <label htmlFor={user.uid}>
+                            {user.data().displayName}
+                        </label>
+                        <input type="checkbox" name={user.data().displayName} id={user.uid}/>
+                    </div>
+                );
+                elem.push(element);
             });
+            setUserResults(elem);
         }
         catch(msg){
             console.warn(msg);
@@ -32,9 +47,32 @@ export default function NewChat() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
 
+    async function init(){
+        try{
+            const users = await retrieveAllUsers();
+            let elem = [];
+            users.forEach(user => {
+                const element = (
+                    <div className="option">
+                        <label htmlFor={user.uid}>
+                            {user.data().displayName}
+                        </label>
+                        <input type="checkbox" name={user.data().displayName} id={user.uid} on/>
+                    </div>
+                );
+                elem.push(element);
+            });
+            setUserResults(elem)
+        }
+        catch(msg){
+            console.warn(msg);
+            setError('Failed to retrieve users')
+        }
+    }
+
     
     React.useEffect(() => {
-
+        init();
     }, [])
 
   return (

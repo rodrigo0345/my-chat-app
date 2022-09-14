@@ -73,9 +73,14 @@ export function AuthProvider({ children }) {
 
     function retrieveUsers(name=""){
         const colRef = collection(db, "users");
-        const q = query(colRef, where("displayName", "array-contains", name), limit(6)); 
+        const q = query(colRef, where("displayName", "==", name), limit(6)); 
         return getDocs(q);
     } 
+
+    function retrieveAllUsers(){
+        const colRef = collection(db, "users");
+        return getDocs(colRef);
+    }
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
@@ -97,7 +102,8 @@ export function AuthProvider({ children }) {
         updateEmail,
         updateUserInfo,
         searchUser, 
-        retrieveUsers
+        retrieveUsers,
+        retrieveAllUsers,
     }
     return (
         <AuthContext.Provider value={value}>
