@@ -356,7 +356,7 @@ body.dark{
             }
     
             .chat-header{
-                background-color:rgba($main-color, 0.8);
+                background-color: $main-color-dark;
     
                 h1{
                     color: $light;
@@ -364,7 +364,7 @@ body.dark{
             }
     
             .messages{
-                background-image: linear-gradient(to top, $dark, $main-color);
+                background-image: linear-gradient(to top, $dark, $main-color-dark);
             
                 .other-person-wrapper{
     
@@ -433,8 +433,14 @@ body.dark{
 
 @media screen and (max-width: 768px){
     .chat{
+        position: relative;
         width: 100% !important;
         border-radius: 0;
+        border: none !important;
+        border-top: 1px solid $tertiary-color !important;
+        border-bottom: 1px solid $tertiary-color !important;
+        max-height: 100vh;
+        box-sizing: border-box;
 
         .chat-options{
             display: none;

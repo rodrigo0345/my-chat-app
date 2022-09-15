@@ -324,13 +324,13 @@ body.dark .chat .chat-messages .loading .loading-icon {
   border-top: 4px solid #F2AA52; /* Blue */
 }
 body.dark .chat .chat-messages .chat-header {
-  background-color: rgba(191, 54, 104, 0.8);
+  background-color: #042940;
 }
 body.dark .chat .chat-messages .chat-header h1 {
   color: #fff;
 }
 body.dark .chat .chat-messages .messages {
-  background-image: linear-gradient(to top, #000, #BF3668);
+  background-image: linear-gradient(to top, #000, #042940);
 }
 body.dark .chat .chat-messages .messages .other-person-wrapper .other-person-msg #avatar {
   border: 1px solid #000;
@@ -371,8 +371,14 @@ body.dark .chat .chat-messages .chat-footer form .send .send-image label:hover {
 
 @media screen and (max-width: 768px) {
   .chat {
+    position: relative;
     width: 100% !important;
     border-radius: 0;
+    border: none !important;
+    border-top: 1px solid #F2CA52 !important;
+    border-bottom: 1px solid #F2CA52 !important;
+    max-height: 100vh;
+    box-sizing: border-box;
   }
   .chat .chat-options {
     display: none;

@@ -11,8 +11,10 @@ import '../styles/chat/chat.css'
 import styled from 'styled-components'
 
 const ChatDiv = styled.div`
-    @media sceen and (max-width: 768px){
-      height: calc(${window.innerHeight}px - 100px);
+    max-height: calc(${window.innerHeight}px-100px);
+
+    @media screen and (max-width: 768px) {
+      height: 100%;
     }
 `;
 
@@ -187,8 +189,7 @@ export default function Chat() {
     <>
       <Header />
       <ChatDiv 
-      className="chat"
-      >
+      className="chat">
         <div className="chat-options">
           <div className="chat-options-header">
             <abbr title="Create a new chat" className="legends">
@@ -252,7 +253,7 @@ export default function Chat() {
 
         </div>
       </ChatDiv>
-
+      
     </>
   )
 }

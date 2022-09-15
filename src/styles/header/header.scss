@@ -74,7 +74,70 @@
             display: none;
         }
     }
+    .mobile-menu{
+        transition: 0.3s;
+        background-color: $light;
+        color: $dark;
+        height: 100%;
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .profile-pic{
+            height: auto;
+            width: 100%;
+            margin: 0;
+            padding: 5px 10px;
+
+            svg{
+                height: 30px;
+                width: 30px;
+            }
+        }
+
+        .menu-items{
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px;
+            list-style: none;
+            font-size: 1.5em;
+
+            li{
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px;
+                border-radius: 0.25rem;
+                transition: 0.3s;
+                cursor: pointer;
+
+                a{
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    width: 100%;
+                    text-decoration: none !important;
+                    span{
+                        margin: 0 10px;
+                    }
+                }
+
+                &:hover{
+                    background-color: $main-color;
+                    color: $light !important;
+                }
+            }
+        }
+    }
 }
+
+
 
 body.dark{
     .header{
@@ -82,7 +145,7 @@ body.dark{
         color: $light;
 
         .hamburguer:hover{
-            background-color: $main-color;
+            background-color: $main-color-dark;
         }
 
         .profile-pic{
@@ -98,11 +161,25 @@ body.dark{
                 a{
                     color: $quaternary-color !important;
                 }
-                color: $main-color;
+                color: $main-color-dark;
             }
 
             a{
                 color: $light !important;
+            }
+        }
+    }
+    .mobile-menu{
+        background-color: $main-color-dark;
+        color: $light;
+
+        .menu-items{
+
+            li{
+                &:hover{
+                    background-color: $dark;
+                    color: $light !important;
+                }
             }
         }
     }
@@ -111,5 +188,6 @@ body.dark{
 @media screen and (max-width: 768px) {
     .header{
         justify-content: space-between;
+        position: relative;
     }
 }
