@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect } from 'react';
 import { useLocalStorage } from '../contexts/LocalStorageContext';
 import { Link } from 'react-router-dom';
+import  "../styles/settings/settings.css";
 
 export default function Settings() {
     

@@ -65,6 +65,16 @@ export function AuthProvider({ children }) {
         }
     }
 
+    async function updateEmailAndUsername(email, username){
+        try{
+            await updateProfile(currentUser, { displayName: username, email: email });
+        }
+        catch(err){
+            console.warn(err);
+            throw(err);
+        }
+    }
+
     function searchUser(id){
         const colUserRef = collection(db, "users");
         const userRef = doc(colUserRef, id);
@@ -101,6 +111,7 @@ export function AuthProvider({ children }) {
         resetPassword,
         updateEmail,
         updateUserInfo,
+        updateEmailAndUsername,
         searchUser, 
         retrieveUsers,
         retrieveAllUsers,

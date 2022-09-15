@@ -3,6 +3,7 @@
 
 .wrap-chat{
     display: flex;
+    flex-direction: column;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -466,6 +467,19 @@ body.dark{
 
             .chat-header{
                 border-radius: 0;
+            }
+
+            .chat-footer{
+                form{
+                    height: 100%;
+                    width: 100%;
+
+                    #new-text{
+                        width: 100%;
+                        height: 80%;
+                        font-size: 1.2em;
+                    }
+                }
             }
         }
     }

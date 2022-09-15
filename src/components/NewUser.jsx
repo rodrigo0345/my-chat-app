@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function UpdateProfile() {
     const usernameRef = useRef();
     const imageRef = useRef();
+    
     const { currentUser, registerUserDataInDatabase } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);

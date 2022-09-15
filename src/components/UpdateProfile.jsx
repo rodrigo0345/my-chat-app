@@ -7,7 +7,7 @@ export default function UpdateProfile() {
     const emailRef = useRef();
     const usernameRef = useRef();
     const imageRef = useRef();
-    const { currentUser, registerUserDataInDatabase } = useAuth();
+    const { currentUser, registerUserDataInDatabase, updateEmailAndUsername } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -19,22 +19,26 @@ export default function UpdateProfile() {
         let email, username, image;
 
         emailRef.current.value !== currentUser.email?
-            email = emailRef.current.value:
-            email = currentUser.email;
-        
+        email = emailRef.current.value:
+        email = currentUser.email;
+    
         usernameRef.current?.value?
-            username = usernameRef.current.value:
-            username = currentUser.username;
+        username = usernameRef.current.value:
+        username = currentUser.username;
         
-        imageRef.current?.value?
-            image = imageRef.current.files[0]:
-            image = currentUser.photoURL;
+        imageRef.current.files[0]?
+        image = imageRef.current.files[0]:
+        image = currentUser.photoURL;
 
         try{
             setLoading(true);
             setError('');
-            await updateUserInfo(email, username, image);
-            await registerUserDataInDatabase(JSON.stringify(image), username, email, currentUser.uid);
+
+            imageRef.current.files[0]? 
+            await updateUserInfo(email, username, image):
+            await updateEmailAndUsername(email, username);
+            await registerUserDataInDatabase(username, email, currentUser.uid);
+
             navigate('/');
         } catch(error) {
             setError("Failed to update account");

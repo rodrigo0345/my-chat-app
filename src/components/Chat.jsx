@@ -221,6 +221,7 @@ export default function Chat() {
                 name="message"
                 id="new-text"
                 ref={messageWritten}
+                autocomplete="off"
                 placeholder="Type a message..."
                 />
                 <div className="send">

@@ -3,6 +3,7 @@ import { Card, Button, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import styled from 'styled-components';
+import '../styles/profile/profile.css'
 
 
 const CardStyled = styled(Card)`
@@ -38,14 +39,13 @@ export default function Profile() {
             {error && <Alert className="alert alert-danger">{error}</Alert>}
             <img src={currentUser?.photoURL? currentUser.photoURL: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} alt="" style={{margin: "auto", border: "1px solid black", borderRadius: "50%", padding: "0.4em"}} height="150" width="150"/>
             <br />
-            <strong>Username: {currentUser && currentUser.displayName}</strong>
+            <strong> <span>Username: </span> {currentUser && currentUser.displayName}</strong>
             <br />
-            <div className="form-control">
-                <label>Email: {currentUser && currentUser.email}</label>
-            </div>
+            <strong> <span>Email: </span> {currentUser && currentUser.email}</strong>
+            <br />
             
             <Link to="/">
-                Home
+                Go Back
             </Link>
             <Link to="/update-profile">
                 Update Profile

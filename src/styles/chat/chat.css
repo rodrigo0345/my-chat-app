@@ -1,5 +1,6 @@
 .wrap-chat {
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -402,5 +403,14 @@ body.dark .chat .chat-messages .chat-footer form .send .send-image label:hover {
   }
   .wrap-chat .chat .chat-header {
     border-radius: 0;
+  }
+  .wrap-chat .chat .chat-footer form {
+    height: 100%;
+    width: 100%;
+  }
+  .wrap-chat .chat .chat-footer form #new-text {
+    width: 100%;
+    height: 80%;
+    font-size: 1.2em;
   }
 }/*# sourceMappingURL=chat.css.map */
