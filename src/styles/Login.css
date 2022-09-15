@@ -7,7 +7,7 @@
   max-width: 600px;
   background-color: #BF3668;
   color: #000;
-  border: 1px solid #972b52;
+  border: 1px solid #042940;
   box-shadow: 0 0 10px rgba(191, 54, 104, 0.5);
   padding: 1.5rem;
 }
@@ -45,7 +45,7 @@
 .card form .form-group input {
   box-shadow: 1px 1px 4px black;
   padding: 0.5rem;
-  border: 1px solid #972b52;
+  border: 1px solid #042940;
   border-radius: 0.25rem;
   background-color: #BF3668;
   color: #fff;
@@ -139,5 +139,60 @@ a:hover {
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+body.dark .card {
+  background-color: #042940;
+  color: #fff;
+  border: 1px solid #F2CA52;
+}
+body.dark .card h1 {
+  color: #fff;
+}
+body.dark .card form .form-group input {
+  background-color: gray;
+  color: #fff;
+}
+body.dark .card form .form-group input:focus {
+  border-color: #999999;
+  background-color: #cccccc;
+  color: #000;
+}
+body.dark .card form .form-group input:active {
+  background-color: #cccccc;
+}
+body.dark .card form button[type=submit] {
+  border: 1px solid #F2CA52;
+  background-color: #F2CA52;
+  color: #fff;
+}
+body.dark .card form button[type=submit]:hover {
+  background-color: #042940;
+  color: #fff;
+}
+body.dark .card form button[type=submit]:active {
+  opacity: 0.5;
+  background-color: #cccccc;
+}
+body.dark a {
+  color: #eebb23 !important;
+}
+body.dark a:hover {
+  color: #F2CA52 !important;
+}
+body.dark .alert, body.dark .success {
+  color: #BF4539 !important;
+}
+body.dark .loading-wrap .loading {
+  border: 4px solid #000; /* Light grey */
+  border-top: 4px solid #F2AA52; /* Blue */
+}
+
+@media screen and (max-width: 768px) {
+  .card {
+    border: none !important;
+    border-top: 1px solid #F2CA52 !important;
+    border-bottom: 1px solid #F2CA52 !important;
   }
 }/*# sourceMappingURL=Login.css.map */

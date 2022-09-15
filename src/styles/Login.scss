@@ -134,3 +134,75 @@ a{
         }
     }
 }
+
+body.dark{
+    .card{
+        background-color: $main-color-dark;
+        color: $light;
+        border: 1px solid $tertiary-color;
+    
+        h1{
+            color: $light;
+        }
+    
+        form{
+            .form-group{
+                    
+                input{
+                    background-color: lighten($dark, 50%);
+                    color: $light;
+                    &:focus{
+                        border-color: lighten($dark, 60%);
+                        background-color: lighten($dark, 80%);
+                        color: $dark;
+                    }
+                    &:active{
+                        background-color: lighten($dark, 80%);
+                    }
+                }
+            }
+            button[type="submit"]{
+                border: 1px solid $tertiary-color;
+                background-color: $tertiary-color;
+                color: $light;
+                &:hover{
+                    background-color: $main-color-dark;
+                    color: $light;
+                }
+                &:active{
+                    opacity: 0.5;
+                    background-color: lighten($dark, 80%);
+                }
+            }
+        }
+    }
+    
+    a{
+        color: darken($tertiary-color, 10%) !important;
+        &:hover{
+            color: $tertiary-color !important;
+        }
+    }
+    
+    .alert, .success{
+        color: $quinary-color !important;
+    }
+    
+    
+    
+    .loading-wrap{
+    
+        .loading{
+            border: 4px solid $dark; /* Light grey */
+            border-top: 4px solid $quaternary-color; /* Blue */
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .card{
+        border: none !important;
+        border-top: 1px solid $tertiary-color !important;
+        border-bottom: 1px solid $tertiary-color !important;
+    }
+}

@@ -1,5 +1,5 @@
 @use './colors/colors.scss' as *;
 
 #background{
-    background-image: linear-gradient($main-color, $secondary-color);   
+    background-image: linear-gradient(45deg,$main-color-dark 20%, $secondary-color 70%);   
 }
