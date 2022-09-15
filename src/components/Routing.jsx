@@ -26,12 +26,12 @@ function Routing() {
 
   useEffect(() => {
     const checkDarkMode = getSavedData('darkMode');
-    checkDarkMode? document.querySelector('#wrap').classList.add('dark') : document.querySelector('#wrap').classList.remove('dark');
+    checkDarkMode? document.querySelector('body').classList.add('dark') : document.querySelector('body').classList.remove('dark');
   }, []);
 
   return (
     
-      <div id="wrap">
+      <div>
           <Background style={{ display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column",
           height: `${window.innerHeight}px`}} id="background">
             <Router>

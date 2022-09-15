@@ -9,7 +9,7 @@ export default function Settings() {
 
 
     function toggleDarkMode(e){
-        const checked = e.target.value;
+        const checked = e.target.checked;
         const website = document.querySelector('body');
 
         if(checked){
@@ -18,12 +18,14 @@ export default function Settings() {
             return;
         }
 
+        saveData('darkMode', false);
         website.classList.remove('dark');
     }
 
     useEffect(() => {
         const darkMode = getSavedData('darkMode');
-        darkMode? document.querySelector('#toggle-dark-mode').checked = true : document.querySelector('#toggle-dark-mode').checked = false;
+        darkMode? document.querySelector('#toggle-dark-mode').checked = true : 
+                    document.querySelector('#toggle-dark-mode').checked = false;
     }, []);
 
   return (
@@ -39,7 +41,7 @@ export default function Settings() {
         </div>
         <div className="cancel">
             <Link to="/">
-                Cancel
+                Go back
             </Link>
         </div>
     </>

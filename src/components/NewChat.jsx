@@ -36,7 +36,7 @@ export default function NewChat() {
                         <label htmlFor={user.id}>
                             {user.data().displayName}
                         </label>
-                        <input type="checkbox" name={user.data().displayName} id={user.id}/>
+                        <input type="checkbox" name={user.data().displayName} id={user.id} onClick={addOrRemoveUser}/>
                     </div>
                 );
                 elem.push(element);

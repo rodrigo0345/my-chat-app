@@ -69,6 +69,27 @@
   }
 }
 
+body.dark .header {
+  background-color: #000;
+  color: #fff;
+}
+body.dark .header .hamburguer:hover {
+  background-color: #BF3668;
+}
+body.dark .header .profile-pic img {
+  border: 2px solid #3F0640;
+  background-color: #fff;
+}
+body.dark .header .menu li:hover {
+  color: #BF3668;
+}
+body.dark .header .menu li:hover a {
+  color: #F2AA52 !important;
+}
+body.dark .header .menu a {
+  color: #fff !important;
+}
+
 @media screen and (max-width: 768px) {
   .header {
     justify-content: space-between;

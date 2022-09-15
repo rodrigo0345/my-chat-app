@@ -101,4 +101,34 @@
 .show-users p {
   margin: 0 10px;
   font-weight: 500;
+}
+
+body.dark {
+  /* Dropdown Content (Hidden by Default) */
+}
+body.dark .dropbtn {
+  background-color: #F2CA52;
+  color: #000;
+}
+body.dark .dropbtn:hover, body.dark .dropbtn:focus {
+  background-color: #f6d981;
+}
+body.dark #myInput {
+  border-bottom: 1px solid #000;
+}
+body.dark #myInput:focus {
+  outline: 3px solid #000;
+}
+body.dark .dropdown-content {
+  background-color: #000;
+  border: 1px solid #000;
+}
+body.dark .dropdown-content label {
+  color: #fff;
+}
+body.dark .dropdown-content a:hover {
+  background-color: #000;
+}
+body.dark .option input {
+  background-color: transparent;
 }/*# sourceMappingURL=newChat.css.map */
