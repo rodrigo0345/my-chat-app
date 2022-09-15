@@ -15,10 +15,29 @@
   height: 100%;
   gap: 10px;
   min-width: 250px;
+  display: grid;
+  grid-template-rows: 1fr 10fr 1fr;
+}
+.chat .chat-options .chat-options-header {
+  width: 100%;
+  height: 100%;
+}
+.chat .chat-options .chat-options-header .legends {
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+.chat .chat-options .chat-options-header .legends .new-chat {
+  width: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
+}
+.chat .chat-options .chat-options-header .legends .new-chat #icon {
+  height: 50px;
+  width: 100px;
 }
 .chat .chat-options .other-chats-wrapper {
   height: 80%;

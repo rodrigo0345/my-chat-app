@@ -1,0 +1,11 @@
+$main-color: #BF3668;
+$secondary-color: #3F0640;
+$tertiary-color: #F2CA52;
+$quaternary-color: #F2AA52;
+$quinary-color: #BF4539;
+
+$main-color-light: lighten($main-color, 10%);
+$main-color-dark: darken($main-color, 10%);
+$main-color-transparent: rgba($main-color, 0.5);
+$light: #fff;
+$dark: #000;

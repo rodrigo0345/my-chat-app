@@ -10,7 +10,7 @@ $main-color-transparent: rgba($main-color, 0.5);
 $light: #fff;
 $dark: #000;
 
-@media (prefers-color-scheme: dark) {
+.dark {
   $main-color: #BF3668;
   $secondary-color: #3F0640;
   $tertiary-color: #F2CA52;

@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import Header from './Header'
 import { BsFillFileEarmarkImageFill } from 'react-icons/bs'
 import { GiHamburgerMenu } from 'react-icons/gi'
+import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import '../styles/chat/chat.css'
 import styled from 'styled-components'
 
@@ -189,6 +190,13 @@ export default function Chat() {
       className="chat"
       >
         <div className="chat-options">
+          <div className="chat-options-header">
+            <abbr title="Create a new chat" className="legends">
+              <Link to="new-chat" className='new-chat'>
+                  <AiOutlineUsergroupAdd id="icon"/>
+              </Link>
+            </abbr>
+          </div>
           <div className="other-chats-wrapper">
               {otherChats}
           </div>
@@ -201,9 +209,6 @@ export default function Chat() {
             </div> }
 
           <div className="chat-header">
-            <Link to="new-chat">
-              click
-            </Link>
               <h1>Chat: {currentChat}</h1>
           </div>
 
