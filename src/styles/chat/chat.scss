@@ -1,28 +1,4 @@
-$main-color: #BF3668;
-$secondary-color: #3F0640;
-$tertiary-color: #F2CA52;
-$quaternary-color: #F2AA52;
-$quinary-color: #BF4539;
-
-$main-color-light: lighten($main-color, 10%);
-$main-color-dark: darken($main-color, 10%);
-$main-color-transparent: rgba($main-color, 0.5);
-$light: #fff;
-$dark: #000;
-
-.dark {
-  $main-color: #BF3668;
-  $secondary-color: #3F0640;
-  $tertiary-color: #F2CA52;
-  $quaternary-color: #F2AA52;
-  $quinary-color: #BF4539;
-
-  $main-color-light: lighten($main-color, 10%);
-  $main-color-dark: darken($main-color, 10%);
-  $main-color-transparent: rgba($main-color, 0.5);
-  $light: #000;
-    $dark: #fff;
-}
+@use '../colors/colors.scss' as *;
 
 
 .chat{
@@ -342,6 +318,118 @@ $dark: #000;
         }
     }
 }
+
+body.dark{
+    .chat{
+        background-color: $dark;
+        color: $light;
+        border: 1px solid $tertiary-color;
+        box-shadow: 1px 1px 10px $light;
+        
+        .chat-options{
+            border-right: 1px solid $tertiary-color;
+    
+            .other-chats-wrapper{
+                .other-chat{
+                    border-top: 1px solid $light;
+                    border-bottom: 1px solid $light;
+
+                    img{
+                        border: 2px solid $tertiary-color;
+                        background-color: $light;
+                    }
+                }
+            }
+        }
+    
+        .chat-messages{
+            background-color: $main-color;
+    
+            .loading{
+                background-color: lighten($dark, 40%);
+        
+                .loading-icon{
+                    opacity: 1.0;
+                    border: 4px solid $dark; /* Light grey */
+                    border-top: 4px solid $quaternary-color; /* Blue */
+                }
+            }
+    
+            .chat-header{
+                background-color:rgba($main-color, 0.8);
+    
+                h1{
+                    color: $light;
+                }
+            }
+    
+            .messages{
+                background-image: linear-gradient(to top, $dark, $main-color);
+            
+                .other-person-wrapper{
+    
+                    .other-person-msg{
+                        #avatar{
+                            border: 1px solid $dark;
+                            background-color: $dark;
+                        }  
+                    }
+                    .msg{
+                        border: 1px solid $light;
+                        color: $light;
+                    }
+                }
+    
+                .my-wrapper{
+    
+                    .my-msg{
+                        
+                        #avatar{
+                            border: 1px solid $dark;
+                            background-color: $dark;
+                        }
+                    }
+    
+                    .msg{
+                        background-color: $main-color;
+                        color: $light;  
+                    }
+                }
+            }
+    
+            .chat-footer{
+                background-color: $dark;
+    
+                form{
+                    background-color: $light;
+                    border: 1px solid $tertiary-color;
+
+                    .send{
+    
+                        button[type="submit"]:hover{
+                            color: $light !important;
+                            background-color: $main-color;
+                            color: $secondary-color;
+                        }
+    
+                        .send-image{
+
+                            label{
+                                color: $dark !important;
+                                transition: 0.3s;
+                                &:hover{
+                                    color: $light !important;
+                                    background-color: $main-color;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 @media screen and (max-width: 768px){
     .chat{
