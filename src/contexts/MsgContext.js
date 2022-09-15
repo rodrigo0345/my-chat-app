@@ -58,9 +58,10 @@ export default function MsgProvider({ children }) {
         return granted;
     }
 
-    function addChat(name, users, photoURL){
-        return setDoc(doc(colRef, uniqid()), {
-            chatID: uniqid(),
+    function addChat(id, name, users, photoURL){
+        const ref = collection(db, "savedChats");
+        return setDoc(doc(ref, id), {
+            chatID: id,
             name: name,
             users: users,
             photoURL: photoURL,
@@ -75,6 +76,7 @@ export default function MsgProvider({ children }) {
         chats,
         currentChat,
         setCurrentChat,
+        addChat
     };
 
     React.useEffect(() => {

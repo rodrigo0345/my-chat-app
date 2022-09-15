@@ -1,16 +1,22 @@
 import React, {useState, useRef} from 'react'
 import { Alert } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import "../styles/newChat/newChat.css";
 import { useAuth } from '../contexts/AuthContext'
+import { useMsg } from '../contexts/MsgContext';
+import uniqid from 'uniqid';
 
 export default function NewChat() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [userResults, setUserResults] = useState([]);
     const { retrieveUsers, retrieveAllUsers } = useAuth();
+    const { savePhotoOnServer, addChat } = useMsg();
     const [usersChecked, setUsersChecked] = useState([]);
-    const { searchRef } = useRef();
+    const searchRef = useRef();
+    const nameRef  = useRef();
+    const imageRef = useRef();
+    const navigate = useNavigate();
     
     async function filterResult(e){
     
@@ -85,6 +91,36 @@ export default function NewChat() {
         }
     }
 
+    async function submitNewChat(e){
+        e.preventDefault();
+
+        const chatName = nameRef.current.value;
+        const chatImage = imageRef.current.files[0];
+        const users = usersChecked;
+        const uniqId = uniqid();
+
+        if(chatName === '' || chatImage === undefined || users.length === 0){
+            setError('Please fill all the fields');
+            return;
+        }
+        
+        setError('');
+        setLoading(true);
+
+        try{
+            //currentUser.uid, 'geral', image
+            const imageUrl = await savePhotoOnServer('chat-image', uniqId, chatImage);
+            console.log(imageUrl)
+            const something = await addChat(uniqId, chatName, users, imageUrl);
+            navigate('/');
+        }
+        catch(msg){
+            console.warn(msg.message);
+            setError('Failed to create chat')
+        }
+        setLoading(false);
+    }
+
     
     React.useEffect(() => {
         init();
@@ -99,14 +135,14 @@ export default function NewChat() {
             <div className="card-body">
                 <h2 className="text-center mb-4">New Chat Room</h2>
                 {error && <Alert className="alert alert-danger">{error}</Alert>}
-                <form>
+                <form onSubmit={submitNewChat}>
                     <div className="form-group">
                         <label>Name</label>
-                        <input type="text" className="form-control" />
+                        <input type="text" ref={nameRef} className="form-control" />
                     </div>
                     <div className="form-group">
                         <label>Profile Image</label>
-                        <input type="file" accept="image/*" className="form-control" />
+                        <input type="file" accept="image/*" ref={imageRef} className="form-control" />
                     </div>
                     <div className="form-group">
                         <label htmlFor="myDropdown">Users</label>
@@ -120,7 +156,7 @@ export default function NewChat() {
                         </div>
                     </div>
                     <div className="form-group show-users">
-                        <label>Users</label>
+                        <label>Chosen Users</label>
                         {usersChecked.map(user => <p>{user.name}</p>)}
                     </div>
                     <button disabled={loading} className="submit" type="submit">Create Room</button>
