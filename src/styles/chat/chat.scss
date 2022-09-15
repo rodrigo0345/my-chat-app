@@ -1,6 +1,12 @@
 @use '../colors/colors.scss' as *;
 
 
+.wrap-chat{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
 .chat{
     max-width: 900px;
     background-color: $light;
@@ -432,18 +438,36 @@ body.dark{
 
 
 @media screen and (max-width: 768px){
-    .chat{
+    .wrap-chat{
         position: relative;
-        width: 100% !important;
-        border-radius: 0;
-        border: none !important;
-        border-top: 1px solid $tertiary-color !important;
-        border-bottom: 1px solid $tertiary-color !important;
-        max-height: 100vh;
-        box-sizing: border-box;
+        width: 100%;
+        grid-template-rows: 1fr 1fr;
 
-        .chat-options{
-            display: none;
+        .header{
+            height: 10%;
+        }
+
+        .chat{
+            z-index: 0;
+            width: 100% !important;
+            border-radius: 0;
+            border: none !important;
+            height: 90%;
+    
+            .chat-options{
+                display: none;
+                position: absolute;
+                left: -9999px;
+            }
+
+            .chat-messages{
+                max-height: 100%;
+            }
+
+            .chat-header{
+                border-radius: 0;
+            }
         }
     }
+    
 }

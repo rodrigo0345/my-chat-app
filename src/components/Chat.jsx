@@ -11,11 +11,11 @@ import '../styles/chat/chat.css'
 import styled from 'styled-components'
 
 const ChatDiv = styled.div`
-    max-height: calc(${window.innerHeight}px-100px);
+`;
 
-    @media screen and (max-width: 768px) {
-      height: 100%;
-    }
+const ChatWrap = styled.div`
+height: ${window.innerHeight}px;
+overflow-y: hidden;
 `;
 
 
@@ -187,72 +187,64 @@ export default function Chat() {
   
   return (
     <>
-      <Header />
-      <ChatDiv 
-      className="chat">
-        <div className="chat-options">
-          <div className="chat-options-header">
-            <abbr title="Create a new chat" className="legends">
-              <Link to="new-chat" className='new-chat'>
-                  <AiOutlineUsergroupAdd id="icon"/>
-              </Link>
-            </abbr>
+      <ChatWrap className="wrap-chat">
+        <Header />
+        <ChatDiv
+        className="chat">
+          <div className="chat-options">
+            <div className="chat-options-header">
+              <abbr title="Create a new chat" className="legends">
+                <Link to="new-chat" className='new-chat'>
+                    <AiOutlineUsergroupAdd id="icon"/>
+                </Link>
+              </abbr>
+            </div>
+            <div className="other-chats-wrapper">
+                {otherChats}
+            </div>
           </div>
-          <div className="other-chats-wrapper">
-              {otherChats}
-          </div>
-        </div>
         
-        <div className="chat-messages">
-
-          { loading && <div className="loading">
-                <div className="loading-icon" /> 
-            </div> }
-
-          <div className="chat-header">
-              <h1>Chat: {currentChat}</h1>
-          </div>
-
-          <div className="messages" onScroll={handleScroll} ref={messageEl}>
-            {displayMessages}
-          </div>
-
-          <div className="chat-footer">
-
-            <form onSubmit={send}>
-
-              <input 
-              type="text" 
-              name="message" 
-              id="new-text" 
-              ref={messageWritten} 
-              placeholder="Type a message..."
-              />
-
-              <div className="send">
-                <button type="submit" disabled={loading} className="send-text">Send</button>
-                
-                <div
-                type="file"
-                className='send-image'>
-                  <label for="chooseFile">
-                    <BsFillFileEarmarkImageFill />
-                  </label>
-                  <input 
-                  onChange={sendImage}
-                  type="file" 
-                  id="chooseFile" 
-                  accept="image/*"
-                  />
+          <div className="chat-messages">
+            { loading && <div className="loading">
+                  <div className="loading-icon" />
+              </div> }
+            <div className="chat-header">
+                <h1>Chat: {currentChat}</h1>
+            </div>
+            <div className="messages" onScroll={handleScroll} ref={messageEl}>
+              {displayMessages}
+            </div>
+            <div className="chat-footer">
+              <form onSubmit={send}>
+                <input
+                type="text"
+                name="message"
+                id="new-text"
+                ref={messageWritten}
+                placeholder="Type a message..."
+                />
+                <div className="send">
+                  <button type="submit" disabled={loading} className="send-text">Send</button>
+        
+                  <div
+                  type="file"
+                  className='send-image'>
+                    <label for="chooseFile">
+                      <BsFillFileEarmarkImageFill />
+                    </label>
+                    <input
+                    onChange={sendImage}
+                    type="file"
+                    id="chooseFile"
+                    accept="image/*"
+                    />
+                  </div>
                 </div>
-              </div>
-
-            </form>
-
+              </form>
+            </div>
           </div>
-
-        </div>
-      </ChatDiv>
+        </ChatDiv>
+      </ChatWrap>
       
     </>
   )

@@ -1,3 +1,10 @@
+.wrap-chat {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
 .chat {
   max-width: 900px;
   background-color: #fff;
@@ -370,17 +377,30 @@ body.dark .chat .chat-messages .chat-footer form .send .send-image label:hover {
 }
 
 @media screen and (max-width: 768px) {
-  .chat {
+  .wrap-chat {
     position: relative;
+    width: 100%;
+    grid-template-rows: 1fr 1fr;
+  }
+  .wrap-chat .header {
+    height: 10%;
+  }
+  .wrap-chat .chat {
+    z-index: 0;
     width: 100% !important;
     border-radius: 0;
     border: none !important;
-    border-top: 1px solid #F2CA52 !important;
-    border-bottom: 1px solid #F2CA52 !important;
-    max-height: 100vh;
-    box-sizing: border-box;
+    height: 90%;
   }
-  .chat .chat-options {
+  .wrap-chat .chat .chat-options {
     display: none;
+    position: absolute;
+    left: -9999px;
+  }
+  .wrap-chat .chat .chat-messages {
+    max-height: 100%;
+  }
+  .wrap-chat .chat .chat-header {
+    border-radius: 0;
   }
 }/*# sourceMappingURL=chat.css.map */
