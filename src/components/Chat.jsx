@@ -22,9 +22,7 @@ export default function Chat() {
   const {messages, sendMessage, notificationsAllowed, savePhotoOnServer, chats, currentChat, setCurrentChat} = useMsg();
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
-  const [loadingScreen, setLoadingScreen] = React.useState(true);
   const [displayMessages, setDisplayMessages] = React.useState([]);
-  const [input, setInput] = React.useState('');
   const [otherChats, setOtherChats] = React.useState([]);
   const messageWritten = useRef(); 
   const messageEl = useRef(null);
@@ -146,7 +144,6 @@ export default function Chat() {
     setLoading(true);
     processMessages(messages).then(() => {
       setLoading(false); 
-      setLoadingScreen(false);
     });
 
     const notify = async () => {
@@ -175,15 +172,13 @@ export default function Chat() {
   }, [messages, currentChat]);
 
   // scroll to the end of the chat
-  // assign to current chat to geral
+  // assign default chat to geral
   useEffect(() => {
     messageEl.current.scroll({ top: messageEl.current.scrollHeight, behavior: 'smooth' });
-    setLoadingScreen(false);
-    setCurrentChat('geral');
+    setCurrentChat(currentChat);
   }, []);
 
   useEffect(() => {
-    console.log(currentChat);
     processOtherChats();
   }, [chats]);
   
@@ -195,10 +190,6 @@ export default function Chat() {
       >
         <div className="chat-options">
           <div className="other-chats-wrapper">
-              <div className="other-chat">
-                <img src="" alt="" />
-                <p>Chat name</p>
-              </div>
               {otherChats}
           </div>
         </div>

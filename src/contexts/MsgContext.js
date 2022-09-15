@@ -19,7 +19,7 @@ export default function MsgProvider({ children }) {
     const [ chats, setChats ] = React.useState([]);
 
     // used for later
-    const [ currentChat, setCurrentChat ] = React.useState(null);
+    const [ currentChat, setCurrentChat ] = React.useState('geral');
 
     const colRef = collection(db, "chat");
 
@@ -79,11 +79,12 @@ export default function MsgProvider({ children }) {
         addChat
     };
 
+    // update messages
     React.useEffect(() => {
         setLoading(true);
 
         // get the current chat
-        const colChat = collection(db, "geral");
+        const colChat = collection(db, currentChat);
 
         const q = query(colChat, orderBy("timestamp", "desc"), limit(10));
 
@@ -100,8 +101,9 @@ export default function MsgProvider({ children }) {
         );
 
         return unsubscribe; 
-    }, []);
+    }, [currentChat]);
 
+    // update chats
     React.useEffect(() => {
         setLoading(true);
 
