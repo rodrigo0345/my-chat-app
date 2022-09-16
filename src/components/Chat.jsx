@@ -27,7 +27,9 @@ export default function Chat() {
   const [loading, setLoading] = React.useState(false);
   const [displayMessages, setDisplayMessages] = React.useState([]);
   const [otherChats, setOtherChats] = React.useState([]);
+
   const messageWritten = useRef(); 
+  const messageEndRef = useRef(null);
   const messageEl = useRef(null);
 
   async function send(e){
@@ -55,6 +57,13 @@ export default function Chat() {
 
   async function processMessages(messages){
     const msgs = await Promise.all(messages.map(async (msg, index) => {
+        // scroll to this element
+        let classNm = undefined;
+        console.log(messages.length)
+        if(index === 0) {
+         classNm = 'scrollToThis';
+        }
+
         const senderID = msg.userID;
         const msgType = msg.type;
 
@@ -66,12 +75,14 @@ export default function Chat() {
         const data = await fetchUserData(senderID);
         let element;
 
+        // room for improvement
         const time = `
           ${msg.timestamp.toDate().getHours()}:${msg.timestamp.toDate().getMinutes()}min
         `;
+
         // just changed the order of the photo (use justify-content: reverse)
           element = (
-            <div className={`${sender}-wrapper`} key={index}>
+            <div className={`${sender}-wrapper ${classNm? classNm: ''}`} key={index}>
               <div className={`${sender}-msg`}>
                 {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
                 <p className="msg-author">{data.name}</p>
@@ -138,9 +149,18 @@ export default function Chat() {
     }
   }
 
-  const  handleScroll = e => {
+  const handleScroll = e => {
     let element = e.target;
     if (element.scrollTop===0) {
+      const lastEl = document.getElementsByClassName('scrollToThis');
+
+      if(lastEl)
+      { 
+        for(let i = 0; i < lastEl.length; i++){
+          lastEl[i].classList.remove('scrollToThis'); 
+        }
+      } 
+
       //fetch messages
       try{
         fetchMoreMessages(currentChat);
@@ -152,6 +172,31 @@ export default function Chat() {
     }
  }
 
+ const automaticScrolling = () => {
+  // make the user focus on the end of the chat
+  if(messageEl.current?.scrollHeight < 600){
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }
+  const snapOnOldMessages = document.getElementsByClassName('scrollToThis')[0];
+  if(snapOnOldMessages !== undefined){
+    snapOnOldMessages.scrollIntoView({ behavior: "smooth" });
+  }
+ }
+
+ const notifications = async () => {
+  if(messages[0].userID === currentUser.uid || document.hasFocus()){
+    return;
+  }
+
+  const notify = await notificationsAllowed();
+  if(notify){
+    new Notification(`New message from ${currentUser.displayName}`, {
+      body: `"${messages[0].message}"`,
+      icon: messages[0].photoURL
+    })
+  }
+ }
+
   // notifications needs work! and loads all the messages in the chat
   useEffect(() => {
     setLoading(true);
@@ -159,35 +204,13 @@ export default function Chat() {
       setLoading(false); 
     });
 
-    const notify = async () => {
-      if(messages[0].userID === currentUser.uid || document.hasFocus()){
-        return;
-      }
-
-      const notify = await notificationsAllowed();
-      if(notify){
-        new Notification(`New message from ${currentUser.displayName}`, {
-          body: `"${messages[0].message}"`,
-          icon: messages[0].photoURL
-        })
-      }
-    }
-    notify();
-
-    // make the user focus on the end of the chat
-    //if (messageEl) {
-    //  messageEl.current.addEventListener('DOMNodeInserted', event => {
-    //    const { currentTarget: target } = event;
-    //    target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-    //  });
-    //}
+    notifications();
+    automaticScrolling();
 
   }, [messages, currentChat]);
 
-  // scroll to the end of the chat
   // assign default chat to geral
   useEffect(() => {
-    //messageEl.current.scroll({ top: messageEl.current.scrollHeight, behavior: 'smooth' });
     setCurrentChat(currentChat);
   }, []);
 
@@ -223,6 +246,7 @@ export default function Chat() {
             </div>
             <div className="messages" onScroll={handleScroll} ref={messageEl}>
               {displayMessages}
+              <div ref={messageEndRef}/>
             </div>
             <div className="chat-footer">
               <form onSubmit={send}>
@@ -231,7 +255,7 @@ export default function Chat() {
                 name="message"
                 id="new-text"
                 ref={messageWritten}
-                autocomplete="off"
+                autoComplete="off"
                 placeholder="Type a message..."
                 />
                 <div className="send">
