@@ -358,6 +358,11 @@ body.dark .chat .chat-messages .messages .my-wrapper .msg {
 }
 body.dark .chat .chat-messages .chat-footer {
   background-color: #000;
+  display: flex;
+  flex-direction: column;
+}
+body.dark .chat .chat-messages .chat-footer #err {
+  max-height: 50px;
 }
 body.dark .chat .chat-messages .chat-footer form {
   background-color: #fff;

@@ -406,7 +406,13 @@ body.dark{
     
             .chat-footer{
                 background-color: $dark;
-    
+                display: flex;
+                flex-direction: column;
+
+                #err{
+                    max-height: 50px;
+                }
+
                 form{
                     background-color: $light;
                     border: 1px solid $tertiary-color;
@@ -436,6 +442,7 @@ body.dark{
         }
     }
 }
+
 
 
 @media screen and (max-width: 768px){

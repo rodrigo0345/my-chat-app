@@ -39,7 +39,7 @@ const MobileMenu = styled.div`
     z-index: 2001;
 `;
 
-export default function Header() {
+export default function Header({chats}) {
 
   function showMobileMenu(e) {
     const menu = document.querySelector('.wrap-menu');
@@ -101,6 +101,14 @@ export default function Header() {
                 <span>Create new chat</span>
                 <AiOutlineUsergroupAdd id="icon"/>
               </Link>
+            </li>
+            <li className='menu-item'>
+                <div className="display-chats">
+                  <span>Your chats</span>
+                  <div className="other-chats-wrapper">
+                    {chats}
+                  </div>
+                </div>
             </li>
           </ul>
         </MobileMenu>

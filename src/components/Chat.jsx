@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useEffect } from 'react'
 import Header from './Header'
 import { BsFillFileEarmarkImageFill } from 'react-icons/bs'
-import { GiHamburgerMenu } from 'react-icons/gi'
+import { Alert } from 'react-bootstrap'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import '../styles/chat/chat.css'
 import styled from 'styled-components'
@@ -231,7 +231,7 @@ export default function Chat() {
   return (
     <>
       <ChatWrap className="wrap-chat">
-        <Header />
+        <Header chats={otherChats}/>
         <ChatDiv
         className="chat">
           <div className="chat-options">
@@ -252,7 +252,7 @@ export default function Chat() {
                   <div className="loading-icon" />
               </div> }
             <div className="chat-header">
-                <h1>Chat: {currentChat}</h1>
+                { (error && <Alert variant="danger" id="err">{error}</Alert>) || <h1>Chat: {currentChat}</h1> }
             </div>
             <div className="messages" onScroll={handleScroll} ref={messageEl}>
               {displayMessages}
@@ -270,7 +270,7 @@ export default function Chat() {
                 />
                 <div className="send">
                   <button type="submit" disabled={loading} className="send-text">Send</button>
-        
+                  
                   <div
                   type="file"
                   className='send-image'>
