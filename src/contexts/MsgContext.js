@@ -1,8 +1,8 @@
 import React from 'react'
-import { setDoc, collection, doc, onSnapshot, query } from "firebase/firestore";
+import { setDoc, collection, doc, onSnapshot, query, startAfter } from "firebase/firestore";
 import { db } from '../firebase';
 import uniqid from 'uniqid';
-import { Timestamp, orderBy, limit } from 'firebase/firestore';
+import { Timestamp, orderBy, limit, getDocs } from 'firebase/firestore';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '../firebase'
 
@@ -17,11 +17,9 @@ export default function MsgProvider({ children }) {
     const [ loading, setLoading ] = React.useState(true);
     const [ messages, setMessages ] = React.useState([]);
     const [ chats, setChats ] = React.useState([]);
-
+    const [ lastRef, setLastRef ] = React.useState(null);
     // used for later
     const [ currentChat, setCurrentChat ] = React.useState('geral');
-
-    const colRef = collection(db, "chat");
 
     function sendMessage(userID, chatID="geral", message, type="text"){
         const colRefChat = collection(db, chatID);
@@ -58,6 +56,40 @@ export default function MsgProvider({ children }) {
         return granted;
     }
 
+    async function fetchMoreMessages(chatID){
+        console.log(lastRef.data())
+        const colChat = collection(db, chatID);
+        let q = undefined;
+        if (lastRef === undefined) { 
+            q =  query( 
+                colChat,
+                orderBy("timestamp", "desc"),
+                limit(10),
+            ); 
+        }
+        else {
+            q =  query( 
+                colChat,
+                limit(10),
+                orderBy("timestamp", "desc"),
+                startAfter(lastRef.data().timestamp),
+            );
+        }
+
+        let snapshot;
+        try{
+            snapshot = await getDocs(q);
+            const docs = snapshot.docs.map(doc => doc.data());
+            setMessages(prev => [...prev, ...docs]);
+        }
+        catch(err){
+            console.warn(err);
+            throw err;
+        }
+
+        setLastRef(snapshot.docs[snapshot.docs.length - 1]);
+    }
+
     function addChat(id, name, users, photoURL){
         const ref = collection(db, "savedChats");
         return setDoc(doc(ref, id), {
@@ -76,17 +108,17 @@ export default function MsgProvider({ children }) {
         chats,
         currentChat,
         setCurrentChat,
-        addChat
+        addChat, 
+        fetchMoreMessages
     };
 
     // update messages
     React.useEffect(() => {
         setLoading(true);
 
-        // get the current chat
-        const colChat = collection(db, currentChat);
-
-        const q = query(colChat, orderBy("timestamp", "desc"), limit(10));
+        // redundant but the msgRef does not update immidiatly
+        const ref = collection(db, currentChat);
+        const q = query(ref, orderBy("timestamp", "desc"), limit(10));
 
         // get all the latest messages
         const unsubscribe = onSnapshot(q,
@@ -97,6 +129,7 @@ export default function MsgProvider({ children }) {
                 });
                 setMessages(docs);
                 setLoading(false);
+                setLastRef(querySnapshot.docs[querySnapshot.docs.length - 1]);
             }
         );
 

@@ -22,7 +22,7 @@ overflow-y: hidden;
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
-  const {messages, sendMessage, notificationsAllowed, savePhotoOnServer, chats, currentChat, setCurrentChat} = useMsg();
+  const {messages, sendMessage, notificationsAllowed, savePhotoOnServer, chats, currentChat, setCurrentChat, fetchMoreMessages} = useMsg();
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [displayMessages, setDisplayMessages] = React.useState([]);
@@ -38,7 +38,6 @@ export default function Chat() {
     
     if(msg === '') return;
 
-    // for later
     const chatID = currentChat;
 
     try{
@@ -67,12 +66,16 @@ export default function Chat() {
         const data = await fetchUserData(senderID);
         let element;
 
+        const time = `
+          ${msg.timestamp.toDate().getHours()}:${msg.timestamp.toDate().getMinutes()}min
+        `;
         // just changed the order of the photo (use justify-content: reverse)
           element = (
             <div className={`${sender}-wrapper`} key={index}>
               <div className={`${sender}-msg`}>
                 {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
                 <p className="msg-author">{data.name}</p>
+                <span>{time}</span>
               </div>
               {msgType === "image"? 
               <a href={msg.message} target="_blank">
@@ -139,6 +142,13 @@ export default function Chat() {
     let element = e.target;
     if (element.scrollTop===0) {
       //fetch messages
+      try{
+        fetchMoreMessages(currentChat);
+      }catch(error){
+        setError("Failed to fetch more messages");
+        console.log(error);
+      }
+
     }
  }
 
@@ -165,19 +175,19 @@ export default function Chat() {
     notify();
 
     // make the user focus on the end of the chat
-    if (messageEl) {
-      messageEl.current.addEventListener('DOMNodeInserted', event => {
-        const { currentTarget: target } = event;
-        target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
-      });
-    }
+    //if (messageEl) {
+    //  messageEl.current.addEventListener('DOMNodeInserted', event => {
+    //    const { currentTarget: target } = event;
+    //    target.scroll({ top: target.scrollHeight, behavior: 'smooth' });
+    //  });
+    //}
 
   }, [messages, currentChat]);
 
   // scroll to the end of the chat
   // assign default chat to geral
   useEffect(() => {
-    messageEl.current.scroll({ top: messageEl.current.scrollHeight, behavior: 'smooth' });
+    //messageEl.current.scroll({ top: messageEl.current.scrollHeight, behavior: 'smooth' });
     setCurrentChat(currentChat);
   }, []);
 
