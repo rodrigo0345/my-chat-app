@@ -389,14 +389,14 @@ body.dark .chat .chat-messages .chat-footer form .send .send-image label:hover {
     grid-template-rows: 1fr 1fr;
   }
   .wrap-chat .header {
-    height: 10%;
+    height: 8%;
   }
   .wrap-chat .chat {
     z-index: 0;
     width: 100% !important;
     border-radius: 0;
     border: none !important;
-    height: 90%;
+    height: 92%;
   }
   .wrap-chat .chat .chat-options {
     display: none;
