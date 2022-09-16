@@ -59,7 +59,6 @@ export default function Chat() {
     const msgs = await Promise.all(messages.map(async (msg, index) => {
         // scroll to this element
         let classNm = undefined;
-        console.log(messages.length)
         if(index === 0) {
          classNm = 'scrollToThis';
         }
@@ -116,7 +115,7 @@ export default function Chat() {
     });
 
     const otherChatsAux = filterChats.map( (chat, index) => {
-      return (
+      const element = (
         <div className="other-chat" onClick={() => {
           setCurrentChat(chat.chatID);
         }}>
@@ -124,6 +123,17 @@ export default function Chat() {
             <p>{chat.name}</p>
         </div>
       )
+      if(chat.users[0] === 'all')
+      {
+        return element;
+      }
+
+      if(chat.users.find(element => element.id === currentUser.uid))
+      {
+        return element;
+      }
+
+      return null;
     })
 
     setOtherChats(otherChatsAux);
