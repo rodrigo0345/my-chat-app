@@ -121,7 +121,7 @@ export default function Chat() {
 
     const otherChatsAux = filterChats.map( (chat, index) => {
       const element = (
-        <div className="other-chat" onClick={() => {
+        <div className="other-chat" key={index} onClick={() => {
           setCurrentChat(chat.chatID);
         }}>
             <img src={chat.photoURL} alt="chat-image" />
@@ -265,7 +265,7 @@ export default function Chat() {
                   <div
                   type="file"
                   className='send-image'>
-                    <label for="chooseFile">
+                    <label htmlFor="chooseFile">
                       <BsFillFileEarmarkImageFill />
                     </label>
                     <input
