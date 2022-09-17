@@ -7,16 +7,19 @@ import { useMsg } from '../contexts/MsgContext';
 import uniqid from 'uniqid';
 
 export default function NewChat() {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [userResults, setUserResults] = useState([]);
-    const { retrieveUsers, retrieveAllUsers } = useAuth();
+    const { retrieveUsers, retrieveAllUsers, currentUser } = useAuth();
     const { savePhotoOnServer, addChat } = useMsg();
-    const [usersChecked, setUsersChecked] = useState([]);
+    
     const searchRef = useRef();
     const nameRef  = useRef();
     const imageRef = useRef();
+
     const navigate = useNavigate();
+    
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [usersChecked, setUsersChecked] = useState([{id: currentUser.uid, name: currentUser.displayName}]);
+    const [userResults, setUserResults] = useState([]);
     
     async function filterResult(e){
     
@@ -30,9 +33,10 @@ export default function NewChat() {
             const users =  await retrieveUsers(search);
 
             let elem = [];
-            users.forEach(user => {
+            users.forEach((user, index) => {
+            
                 const element = (
-                    <div className="option">
+                    <div className="option" key={index}>
                         <label htmlFor={user.id}>
                             {user.data().displayName}
                         </label>
@@ -72,9 +76,10 @@ export default function NewChat() {
         try{
             const users = await retrieveAllUsers();
             let elem = [];
-            users.forEach(user => {
+            users.forEach((user, index) => {
+                if(user.id === currentUser.uid) return;
                 const element = (
-                    <div className="option">
+                    <div className="option" key={index}>
                         <label htmlFor={user.id}>
                             {user.data().displayName}
                         </label>
@@ -157,7 +162,13 @@ export default function NewChat() {
                     </div>
                     <div className="form-group show-users">
                         <label>Chosen Users</label>
-                        {usersChecked.map(user => <p>{user.name}</p>)}
+                        {usersChecked.map(user => {
+                            let add = undefined;
+                            if(user.id === currentUser.uid){
+                                add = ' (you)';
+                            }
+                            return (<p>{user.name}{add}</p>)
+                        })}
                     </div>
                     <button disabled={loading} className="submit" type="submit">Create Room</button>
                 </form>
