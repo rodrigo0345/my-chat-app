@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import {getAuth} from "firebase/auth";
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
-import { getMessaging } from 'firebase/messaging/sw';
+import { getMessaging, getToken } from 'firebase/messaging';
 
 const app = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -17,5 +17,21 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 const db = getFirestore(app);
 const messaging = getMessaging(app);
+const requestForToken = () => {
+  return getToken(messaging, { vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log('current token for client: ', currentToken);
+        // Perform any other neccessary action with the token
+      } else {
+        // Show permission request UI
+        console.log('No registration token available. Request permission to generate one.');
+      }
+    })
+    .catch((err) => {
+      console.log('An error occurred while retrieving token. ', err);
+    });
+};
+
 export default app;
-export { auth, storage, db, messaging }
+export { auth, storage, db, messaging, requestForToken }

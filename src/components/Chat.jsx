@@ -9,7 +9,7 @@ import { Alert } from 'react-bootstrap'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
 import '../styles/chat/chat.css'
 import styled from 'styled-components'
-import { messaging } from '../firebase'
+import { requestForToken, messaging } from '../firebase'
 
 const ChatDiv = styled.div`
 `;
@@ -194,19 +194,18 @@ export default function Chat() {
   }
  }
 
+ const requestNotificationPermission = () => {
+    console.log('requesting permission...');
+    Notification.requestPermission().then(() => {
+      notifications();
+    }).catch((err) => {
+      console.log('Unable to get permission to notify.', err);
+    });
+}
+ 
+
  const notifications = async () => {
-  Notification.requestPermission().then((permission) => {
-    if (permission === "granted") {
-      return messaging.getToken();
-    }
-  }).then((token) => {
-    if (token) {
-      console.log('token', token);
-    }
-  }).catch((err) => {
-    console.log('error', err);
-  }
-  );
+  requestForToken();
  }
 
   // notifications needs work! and loads all the messages in the chat
