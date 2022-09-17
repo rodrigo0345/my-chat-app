@@ -7,9 +7,10 @@ import Header from './Header'
 import { BsFillFileEarmarkImageFill } from 'react-icons/bs'
 import { Alert } from 'react-bootstrap'
 import { AiOutlineUsergroupAdd } from 'react-icons/ai'
+import {diferenceBetweenTimestamps, prepareForDisplay} from "../logic/time";
 import '../styles/chat/chat.css'
 import styled from 'styled-components'
-import { requestForToken, messaging } from '../firebase'
+import { Timestamp } from 'firebase/firestore'
 
 const ChatDiv = styled.div`
 `;
@@ -23,7 +24,17 @@ overflow-y: hidden;
 
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
-  const {messages, sendMessage, notificationsAllowed, savePhotoOnServer, chats, currentChat, setCurrentChat, fetchMoreMessages} = useMsg();
+  const {
+    messages, 
+    sendMessage, 
+    notificationsAllowed, 
+    savePhotoOnServer, 
+    chats, 
+    currentChat, 
+    setCurrentChat, 
+    fetchMoreMessages
+  } = useMsg();
+  
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const [displayMessages, setDisplayMessages] = React.useState([]);
@@ -58,12 +69,6 @@ export default function Chat() {
 
   async function processMessages(messages){
     const msgs = await Promise.all(messages.map(async (msg, index) => {
-        // scroll to this element
-        let classNm = undefined;
-        if(index === 0) {
-         classNm = 'scrollToThis';
-        }
-
         const senderID = msg.userID;
         const msgType = msg.type;
 
@@ -76,17 +81,16 @@ export default function Chat() {
         let element;
 
         // room for improvement
-        const time = `
-          ${msg.timestamp.toDate().getHours()}:${msg.timestamp.toDate().getMinutes()}min
-        `;
+        
+        let time = diferenceBetweenTimestamps(Number(msg.timestamp.seconds), Number(Timestamp.now().seconds));
 
         // just changed the order of the photo (use justify-content: reverse)
           element = (
-            <div className={`${sender}-wrapper ${classNm? classNm: ''}`} key={index}>
+            <div className={`${sender}-wrapper`} key={index}>
               <div className={`${sender}-msg`}>
                 {data.photo? <img src={data.photo} alt={data.name} id="avatar"/>: null}
                 <p className="msg-author">{data.name}</p>
-                <span>{time}</span>
+                <span>{prepareForDisplay(time)}</span>
               </div>
               {msgType === "image"? 
               <a href={msg.message} target="_blank">
@@ -185,27 +189,13 @@ export default function Chat() {
 
  const automaticScrolling = () => {
   // make the user focus on the end of the chat
-  if(messageEl.current?.scrollHeight < 600){
+  if(messageEl.current?.scrollHeight){
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }
-  const snapOnOldMessages = document.getElementsByClassName('scrollToThis')[0];
-  if(snapOnOldMessages !== undefined){
-    snapOnOldMessages.scrollIntoView({ behavior: "smooth" });
   }
  }
 
- const requestNotificationPermission = () => {
-    console.log('requesting permission...');
-    Notification.requestPermission().then(() => {
-      notifications();
-    }).catch((err) => {
-      console.log('Unable to get permission to notify.', err);
-    });
-}
- 
+ const notifications = () => {
 
- const notifications = async () => {
-  requestForToken();
  }
 
   // notifications needs work! and loads all the messages in the chat
@@ -220,14 +210,14 @@ export default function Chat() {
 
   }, [messages, currentChat]);
 
-  // assign default chat to geral
-  useEffect(() => {
-    setCurrentChat(currentChat);
-  }, []);
-
   useEffect(() => {
     processOtherChats();
   }, [chats]);
+
+  useEffect(() => {
+    setCurrentChat(currentChat);
+    messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+  }, []);
   
   return (
     <>

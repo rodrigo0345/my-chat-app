@@ -1,8 +1,8 @@
 import { initializeApp } from "firebase/app";
-import {getAuth} from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { getStorage } from 'firebase/storage';
 import { getFirestore } from 'firebase/firestore';
-import { getMessaging, getToken } from 'firebase/messaging';
+import { getMessaging, getToken, onMessage  } from 'firebase/messaging';
 
 const app = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -17,21 +17,38 @@ const auth = getAuth(app);
 const storage = getStorage(app);
 const db = getFirestore(app);
 const messaging = getMessaging(app);
+
+// notification's token, throws error
 const requestForToken = () => {
-  return getToken(messaging, { vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY })
+  getToken(messaging, { vapidKey: 'BPPGWdIzWyqMUttpd_IagqRDNt2bPsthLLAbbNIrlhsVFNiZSRALjCqBaxSgfnUgYTeT7SMcoCQxaJYTzTR8eCk' })
     .then((currentToken) => {
-      if (currentToken) {
         console.log('current token for client: ', currentToken);
-        // Perform any other neccessary action with the token
-      } else {
-        // Show permission request UI
-        console.log('No registration token available. Request permission to generate one.');
-      }
     })
     .catch((err) => {
-      console.log('An error occurred while retrieving token. ', err);
+      console.warn('An error occurred while retrieving token. ', err);
     });
 };
 
+// request permission for notifications
+const requestForPermission = () => {
+    Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+            console.log('Notification permission granted.');
+            requestForToken();
+        } else {
+            console.log('Unable to get permission to notify.');
+        }
+    });
+};
+requestForPermission();
+
+const onMessageListener = () =>
+  new Promise((resolve) => {
+    onMessage(messaging, (payload) => {
+      console.log("payload", payload)
+      resolve(payload);
+    });
+  });
+
 export default app;
-export { auth, storage, db, messaging, requestForToken }
+export { auth, storage, db, messaging, onMessageListener }

@@ -57,7 +57,6 @@ export default function MsgProvider({ children }) {
     }
 
     async function fetchMoreMessages(chatID){
-        console.log(lastRef.data())
         const colChat = collection(db, chatID);
         let q = undefined;
         if (lastRef === undefined) { 
