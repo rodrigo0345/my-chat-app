@@ -1,5 +1,5 @@
 import React, {useRef} from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useMsg } from '../contexts/MsgContext'
 import { useAuth } from '../contexts/AuthContext'
 import { useEffect } from 'react'
@@ -20,14 +20,11 @@ height: ${window.innerHeight}px;
 overflow-y: hidden;
 `;
 
-
-
 export default function Chat() {
   const { currentUser, searchUser } = useAuth(); 
   const {
     messages, 
     sendMessage, 
-    notificationsAllowed, 
     savePhotoOnServer, 
     chats, 
     currentChat, 

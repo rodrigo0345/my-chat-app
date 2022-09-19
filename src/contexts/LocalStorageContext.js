@@ -7,7 +7,6 @@ export function useLocalStorage(){
 }
 
 export function LocalStorageProvider({ children }) {
-    const [loading, setLoading] = React.useState(false);
 
     function getSavedData(key){
         const savedData = localStorage.getItem(key);
@@ -24,7 +23,7 @@ export function LocalStorageProvider({ children }) {
     }
     return (
         <LocalStorageContext.Provider value={value}>
-            { !loading && children }
+            { children }
         </LocalStorageContext.Provider>
     )
 }

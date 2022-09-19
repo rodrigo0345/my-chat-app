@@ -1,11 +1,10 @@
 import React, {useEffect} from "react";
-import { Container } from "react-bootstrap";
 import { AuthProvider } from "../contexts/AuthContext";
 import Signup from "./Signup";
 import Profile from "./Profile";
 import Login from "./Login";
 import PrivateRoute from "./PrivateRoute";
-import { BrowserRouter as Router, Routes , Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes , Route } from "react-router-dom";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import Chat from "./Chat";

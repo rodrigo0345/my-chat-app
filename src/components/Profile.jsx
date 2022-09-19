@@ -1,18 +1,8 @@
 import React, {useState} from 'react'
-import { Card, Button, Alert } from 'react-bootstrap'
+import { Button, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import styled from 'styled-components';
 import '../styles/profile/profile.css'
-
-
-const CardStyled = styled(Card)`
-    max-width: 600px;
-    width: 60%;
-    @media (max-width: 620px) {
-        width: 90%;
-    }
-`
 
 export default function Profile() {
     const { currentUser, logout } = useAuth();

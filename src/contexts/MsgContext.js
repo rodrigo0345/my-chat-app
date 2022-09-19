@@ -45,17 +45,6 @@ export default function MsgProvider({ children }) {
         return fileUrl;
     }
 
-    async function notificationsAllowed(){
-        const notify =  await Notification.requestPermission();
-
-        let granted = false ;
-        if(notify === "granted"){
-            granted = true;
-        }
-
-        return granted;
-    }
-
     async function fetchMoreMessages(chatID){
         const colChat = collection(db, chatID);
         let q = undefined;
@@ -102,7 +91,6 @@ export default function MsgProvider({ children }) {
     const value = {
         messages,
         sendMessage,
-        notificationsAllowed,
         savePhotoOnServer,
         chats,
         currentChat,
