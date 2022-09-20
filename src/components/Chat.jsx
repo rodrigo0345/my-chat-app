@@ -150,12 +150,13 @@ export default function Chat() {
   async function sendImage(e){
     const image = e.target.files[0];
     if(image === undefined) return;
+    const chatID = currentChat;
 
     try{
       setLoading(true);
       setError('');
-      const url = await savePhotoOnServer(currentUser.uid, 'geral', image);
-      await sendMessage(currentUser.uid, 'geral', url, 'image');
+      const url = await savePhotoOnServer(currentUser.uid, chatID, image);
+      await sendMessage(currentUser.uid, chatID, url, 'image');
     }catch(error){
       setError("Failed to send image");
     }
